@@ -1,0 +1,167 @@
+---
+title: "Day 1 Tutorial"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Running/conducting R
+
+* Using the R console, in your terminal or Command Prompt type `r` or `R`, and one can code in the R environment. In this way, you can used `Rscript` to run your script.
+
+```
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+...
+
+>
+```
+
+* Graphic User Interfaces (GUI), there are many options including RGUI, RStudio, Jupyter etc.. RStudio is a comprehensive and functional choice. In the RStudio, one can run code line by line or the selected code with `CTRL`+`ENTER` key.
+
+## R package
+
+Packages are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data. R packages are the function extensions of R. Usually a package would provide the specific introduction to help install it, and principally there are 3 ways to install R packages.
+
+* Install packages
+
+* From CRAN
+```
+install.pacakge("Package")
+```
+* From bioconductor
+```
+# The first command only needs to be run once
+
+install.packages("BiocManager") 
+BiocManager::install("Package")
+```
+* From github
+```
+# The first command only needs to be run once
+
+install.packages("devtools")
+devtools::install_github("NaijIuc/TargetByLasso")
+```
+* Loading packages
+
+No matter where the packages installed from, one can load the desired package with the `library` command to load the specific package. 
+
+```
+library("Package.1")
+library("Package.2")
+...
+```
+## Functions and objects
+
+R is an Interpreted language and will give outcomes straight forward after your input with most functions. R has a lot of [built-in functions](https://cran.r-project.org/doc/contrib/Short-refcard.pdf) in assisting one's work. Below is the general format of function usage.
+
+```
+function(variables, statements, ...)
+```
+Examples:
+```{r, eval=F, echo=T}
+
+x <- 1:25
+
+sum(x)
+
+mean(x)
+
+matrix(x, ncol = 5, byrow = T)
+
+paste("No", x, sep = ".")
+
+plot(x)
+
+```
+Sometimes, one may confuse about a function, and `?function` will provide details about the function.
+
+Example:
+```{r, eval=F, echo=T}
+?lm
+?glm
+```
+
+### Assignment and comment
+
+* Assign a value to a name with assignment operators. 
+* Make comments with `#` for single-line comment, and `CTRL`+`SHIFT`+`c` for paragraph comment.
+
+```{r, eval=F, echo=T}
+x <- 1:5
+
+9:5 -> y
+
+Z = x + y
+
+a <- b <- c <- 6
+```
+
+### Data type and class
+
+Objects are composed of various elements, and each element has its type
+
+* *Numeric*: 0, -1, 3.14
+  * *Integer*: 2L (the "L" tells R to store this as an integer)
+* *Character*: "R", "pitt"
+* *Logical*: TRUE (T); FALSE (F)
+* *complex*: 1+4i (complex numbers with real and imaginary parts)
+
+When put the same or different elements into a group, they then form objects in different structures
+
+* *Vector*, the most common and basic data structure in R;
+* *Factors*, variables take on a limited number of different values, often referred to as categorical variables;
+* *Data frame*, a very important data type in R for most tabular data;
+* *matrix*, matrices are an extension of the numeric or character vectors;
+  * *Array*, higher dimensional data, the dimension of vector is 1; of matrix is 2; and of array is n(n ≥ 3);
+* *list*, a container.
+
+Some of these structures require that all members be of the same data type (e.g. vectors, matrices) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.
+
+```{r, eval=F, echo=T}
+#Vector, (if there are different types of data in a vector, then it forcely forms a charactpr vector):
+a <- c(1,2,3); b <- c(1L,"apple",2+5i, logical(2))
+a; b
+
+#Factor, (factor class helps simply classify your data):
+c <- factor(c(1:5,1,3,5)); 
+c
+c[levels(c) == "1"]
+
+# Matrix (there built-in functions help to conduct matrix operations):
+m <- matrix(1:6, nrow = 2, ncol = 3); n <- matrix(1:6, nrow = 3, ncol = 2)
+# The created matrixes
+m; n; 
+# Operations:
+m%*%n; n%*%m
+
+# Array:
+v1 <- 1:3
+v2 <- 8:14
+array(c(v1,v2),dim = c(2,3,3)) # row, column, dimension
+
+# Data frame (A built-in dataset from R is included, using data() to check all built-in dataset):
+df.co2 <- head(CO2)
+dim(CO2)
+
+# List:
+list <- list(a,b,c,CO2,m,n)
+list[[1]]
+```
+### Calculating signs
+
+* Arithmetic operator: 
+```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+knitr::kable(data.frame('Operator' = c("+","-","*","/","^ or **", "%%", "%/%"),
+'Description' = c("addition","subtraction","multiplication","division","exponentiation","modulus (x mod y) 5%%2 is 1","integer division 5%/%2 is 2")))
+```
+* Logical operator:  
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+knitr::kable(data.frame('Operator' = c("<","<=", ">",">=","==","!=","!x","|","&","isTRUE(x)"),
+'Description' = c("less than",	"less than or equal to",	"greater than",	"greater than or equal to",	"exactly equal to",	"not equal to",	"Not x",	"x OR y",	"x AND y",	"test if X is TRUE")),
+caption = 'Some of the outcomes are logical (TRUE or FALSE)')
+```
