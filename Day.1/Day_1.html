@@ -618,12 +618,15 @@ is.na()</code></pre>
 <div id="data-read-in-and-output" class="section level2">
 <h2>Data read-in and output</h2>
 <p>R can read files from local files, online files, and memory, with variant types. With the help of some packages, R can access the Excel file as well. E.g.</p>
-<pre class="r"><code>t1 &lt;- read.table(&quot;data/gene_expression.csv&quot;,sep = &quot;,&quot;)
+<pre class="r"><code>t1 &lt;- read.table(&quot;data/covid-19.tsv&quot;)
 t2 &lt;- read.table(&#39;https://raw.githubusercontent.com/jmzeng1314/my-R/master/DEG_scripts/tair/DESeq2_DEG.Day1-Day0.txt&#39;)
 t3 &lt;-  readClipboard()
 
 library(&quot;readxl&quot;)
-t4 &lt;- read_excel(&quot;data/GO_3cell.xls&quot;)</code></pre>
+t4 &lt;- read_excel(&quot;data/GO_3cell.xls&quot;)
+
+library(data.table)
+t5 &lt;- fread(&quot;data/LUAD_phenotype&quot;) </code></pre>
 <p>Enter data using a spreadsheet</p>
 <pre class="r"><code>edit(t2)
 fix(t2)</code></pre>
@@ -665,8 +668,8 @@ plot(sample(t2$pvalue,50))
 barplot(t2$log2FoldChange[1:20])
 hist(t2$pvalue)
 pie(t2$baseMean[7:10], labels = rownames(t2)[7:10])
-dotchart(t)
-boxplot(list(t2$pvalue, t2$padj))</code></pre>
+boxplot(list(t2$pvalue, t2$padj))
+dotchart(t2$baseMean[1:10], labels = rownames(t2)[1:10])</code></pre>
 <p>Save images, Export is able to help save the plot for sure, but if you want high-quality figures, by using:</p>
 <pre class="r"><code>jpeg/png/pdf/tiff(&#39;rplot.jpg/png/pdf/tif&#39;, width = 8, height = 8, unit=&quot;in&quot;, res=300)
 plot(x,y)

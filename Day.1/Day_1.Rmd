@@ -182,12 +182,15 @@ caption = 'Some of the outcomes are logical (TRUE or FALSE)')
 R can read files from local files, online files, and memory, with variant types. With the help of some packages, R can access the Excel file as well. E.g.
 
 ```{r, , eval=F, echo=T}
-t1 <- read.table("data/gene_expression.csv",sep = ",")
+t1 <- read.table("data/covid-19.tsv")
 t2 <- read.table('https://raw.githubusercontent.com/jmzeng1314/my-R/master/DEG_scripts/tair/DESeq2_DEG.Day1-Day0.txt')
 t3 <-  readClipboard()
 
 library("readxl")
 t4 <- read_excel("data/GO_3cell.xls")
+
+library(data.table)
+t5 <- fread("data/LUAD_phenotype") 
 ```
 
 Enter data using a spreadsheet
@@ -244,8 +247,8 @@ plot(sample(t2$pvalue,50))
 barplot(t2$log2FoldChange[1:20])
 hist(t2$pvalue)
 pie(t2$baseMean[7:10], labels = rownames(t2)[7:10])
-dotchart(t)
 boxplot(list(t2$pvalue, t2$padj))
+dotchart(t2$baseMean[1:10], labels = rownames(t2)[1:10])
 ```
 
 Save images, Export is able to help save the plot for sure, but if you want high-quality figures, by using:
