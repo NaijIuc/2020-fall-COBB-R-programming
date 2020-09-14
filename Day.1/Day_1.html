@@ -481,7 +481,7 @@ a &lt;- b &lt;- c &lt;- 6</code></pre>
 </ul></li>
 <li><em>list</em>, a container.</li>
 </ul>
-<p>Some of these structures require that all members be of the same data type (e.g. vectors, matrices) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.</p>
+<p>Some of these structures require that all members be of the same data type (e.g. vectors, matrices, arrays) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.</p>
 <pre class="r"><code>#Vector, (if there are different types of data in a vector, then it forcely forms a charactpr vector):
 a &lt;- c(1,2,3); b &lt;- c(1L,&quot;apple&quot;,2+5i, logical(2))
 a; b
@@ -492,8 +492,8 @@ c
 c[levels(c) == &quot;1&quot;]
 
 # Matrix (there built-in functions help to conduct matrix operations):
-m &lt;- matrix(1:6, nrow = 2, ncol = 3); n &lt;- matrix(1:6, nrow = 3, ncol = 2)
-# The created matrixes
+m &lt;- matrix(1:6, nrow = 2, ncol = 3); n &lt;- matrix(1:6, nrow = 3, ncol = 2)</code></pre>
+<pre class="r"><code># The created matrixes
 m; n; 
 # Operations:
 m%*%n; n%*%m
@@ -510,6 +510,11 @@ dim(CO2)
 # List:
 list &lt;- list(a,b,c,CO2,m,n)
 list[[1]]</code></pre>
+<p>Above types/classes can be determined with following functions:</p>
+<pre class="r"><code>mode() #The (Storage) Mode of an Object
+calss() # the type/class of an object
+is.numeric(x) &quot;test if X is a numeric&quot;
+is.na()</code></pre>
 </div>
 <div id="calculating-signs" class="section level3">
 <h3>Calculating signs</h3>
@@ -609,6 +614,63 @@ list[[1]]</code></pre>
 </tbody>
 </table>
 </div>
+</div>
+<div id="data-read-in-and-output" class="section level2">
+<h2>Data read-in and output</h2>
+<p>R can read files from local files, online files, and memory, with variant types. With the help of some packages, R can access the Excel file as well. E.g.</p>
+<pre class="r"><code>t1 &lt;- read.table(&quot;data/gene_expression.csv&quot;,sep = &quot;,&quot;)
+t2 &lt;- read.table(&#39;https://raw.githubusercontent.com/jmzeng1314/my-R/master/DEG_scripts/tair/DESeq2_DEG.Day1-Day0.txt&#39;)
+t3 &lt;-  readClipboard()
+
+library(&quot;readxl&quot;)
+t4 &lt;- read_excel(&quot;data/GO_3cell.xls&quot;)</code></pre>
+<p>Enter data using a spreadsheet</p>
+<pre class="r"><code>edit(t2)
+fix(t2)</code></pre>
+<p>Operations on data frame, like merge, subset, isolate …(demo)</p>
+<p>Write files:</p>
+<pre class="r"><code>sink(&quot;file.txt&quot;)
+writeLines()
+write.csv()
+write.table()</code></pre>
+<p>Save writes an external representation of R objects to the specified file. The objects can be read back from the file at a later date.</p>
+<pre class="r"><code>save.image(file = &quot;.RData&quot;, version = NULL,...)</code></pre>
+<p>The saved files can be read by using function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/load.html">load</a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/attach.html">attach</a> (or <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/data.html">data</a> in some cases).</p>
+</div>
+<div id="simple-graphs-with-r" class="section level2">
+<h2>Simple Graphs with R</h2>
+<p>R is famous for its graphing imaging ability (Please try <code>demo(graphics)</code> to check its gallery). Besides the popular package, <code>ggplot</code>, R has plenty of graph functions and corresponding associating functions to generate beautiful images.</p>
+<pre class="r"><code>plot(x = t2$log2FoldChange, y = t2$padj)
+abline(h = 0.05, col = &quot;red&quot;, lty = 2)
+
+plot(x = t2$log2FoldChange, y = -log(t2$pvalue), 
+     col = ifelse(t2$pvalue &gt; 0.05, &quot;gray&quot;, 
+                  ifelse(t2$log2FoldChange &lt; 0, &quot;blue&quot;,&quot;red&quot;)),
+     main = &quot;My Volcano&quot;,
+     xlab = &quot;Log 2 Fold Change&quot;,
+     ylab = &quot;- Log P&quot;)
+
+
+# subpanel option 1
+par(mfrow=c(3,2)) # row col
+
+# subpanel option 2
+layout ( matrix ( c (1 , 1 , 1 ,
+                     2 , 3 , 4 ,
+                     2 , 3 , 5) , 
+                  nr = 3 , 
+                  byrow = T) )
+
+plot(sample(t2$pvalue,50))
+barplot(t2$log2FoldChange[1:20])
+hist(t2$pvalue)
+pie(t2$baseMean[7:10], labels = rownames(t2)[7:10])
+dotchart(t)
+boxplot(list(t2$pvalue, t2$padj))</code></pre>
+<p>Save images, Export is able to help save the plot for sure, but if you want high-quality figures, by using:</p>
+<pre class="r"><code>jpeg/png/pdf/tiff(&#39;rplot.jpg/png/pdf/tif&#39;, width = 8, height = 8, unit=&quot;in&quot;, res=300)
+plot(x,y)
+dev.off()</code></pre>
 </div>
 
 

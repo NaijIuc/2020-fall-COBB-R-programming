@@ -120,7 +120,7 @@ When put the same or different elements into a group, they then form objects in 
   * *Array*, higher dimensional data, the dimension of vector is 1; of matrix is 2; and of array is n(n ≥ 3);
 * *list*, a container.
 
-Some of these structures require that all members be of the same data type (e.g. vectors, matrices) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.
+Some of these structures require that all members be of the same data type (e.g. vectors, matrices, arrays) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.
 
 ```{r, eval=F, echo=T}
 #Vector, (if there are different types of data in a vector, then it forcely forms a charactpr vector):
@@ -134,6 +134,10 @@ c[levels(c) == "1"]
 
 # Matrix (there built-in functions help to conduct matrix operations):
 m <- matrix(1:6, nrow = 2, ncol = 3); n <- matrix(1:6, nrow = 3, ncol = 2)
+```
+
+
+```{r, eval=F, echo=T}
 # The created matrixes
 m; n; 
 # Operations:
@@ -152,6 +156,13 @@ dim(CO2)
 list <- list(a,b,c,CO2,m,n)
 list[[1]]
 ```
+Above types/classes can be determined with following functions:
+```{r, eval=F, echo=T}
+mode() #The (Storage) Mode of an Object
+calss() # the type/class of an object
+is.numeric(x) "test if X is a numeric"
+is.na()
+```
 ### Calculating signs
 
 * Arithmetic operator: 
@@ -164,4 +175,83 @@ knitr::kable(data.frame('Operator' = c("+","-","*","/","^ or **", "%%", "%/%"),
 knitr::kable(data.frame('Operator' = c("<","<=", ">",">=","==","!=","!x","|","&","isTRUE(x)"),
 'Description' = c("less than",	"less than or equal to",	"greater than",	"greater than or equal to",	"exactly equal to",	"not equal to",	"Not x",	"x OR y",	"x AND y",	"test if X is TRUE")),
 caption = 'Some of the outcomes are logical (TRUE or FALSE)')
+```
+
+## Data read-in and output
+
+R can read files from local files, online files, and memory, with variant types. With the help of some packages, R can access the Excel file as well. E.g.
+
+```{r, , eval=F, echo=T}
+t1 <- read.table("data/gene_expression.csv",sep = ",")
+t2 <- read.table('https://raw.githubusercontent.com/jmzeng1314/my-R/master/DEG_scripts/tair/DESeq2_DEG.Day1-Day0.txt')
+t3 <-  readClipboard()
+
+library("readxl")
+t4 <- read_excel("data/GO_3cell.xls")
+```
+
+Enter data using a spreadsheet
+
+```{r, , eval=F, echo=T}
+edit(t2)
+fix(t2)
+```
+
+Operations on data frame, like merge, subset, isolate …(demo)
+
+Write files:
+```{r, , eval=F, echo=T}
+sink("file.txt")
+writeLines()
+write.csv()
+write.table()
+```
+
+Save writes an external representation of R objects to the specified file. The objects can be read back from the file at a later date.
+
+```{r, , eval=F, echo=T}
+save.image(file = ".RData", version = NULL,...)
+```
+The saved files can be read by using function [load](https://stat.ethz.ch/R-manual/R-devel/library/base/html/load.html) or [attach](https://stat.ethz.ch/R-manual/R-devel/library/base/html/attach.html) (or [data](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/data.html) in some cases).
+
+## Simple Graphs with R
+
+R is famous for its graphing imaging ability (Please try `demo(graphics)` to check its gallery). Besides the popular package, `ggplot`, R has plenty of graph functions and corresponding associating functions to generate beautiful images.
+
+```{r, , eval=F, echo=T}
+plot(x = t2$log2FoldChange, y = t2$padj)
+abline(h = 0.05, col = "red", lty = 2)
+
+plot(x = t2$log2FoldChange, y = -log(t2$pvalue), 
+     col = ifelse(t2$pvalue > 0.05, "gray", 
+                  ifelse(t2$log2FoldChange < 0, "blue","red")),
+     main = "My Volcano",
+     xlab = "Log 2 Fold Change",
+     ylab = "- Log P")
+
+
+# subpanel option 1
+par(mfrow=c(3,2)) # row col
+
+# subpanel option 2
+layout ( matrix ( c (1 , 1 , 1 ,
+                     2 , 3 , 4 ,
+                     2 , 3 , 5) , 
+                  nr = 3 , 
+                  byrow = T) )
+
+plot(sample(t2$pvalue,50))
+barplot(t2$log2FoldChange[1:20])
+hist(t2$pvalue)
+pie(t2$baseMean[7:10], labels = rownames(t2)[7:10])
+dotchart(t)
+boxplot(list(t2$pvalue, t2$padj))
+```
+
+Save images, Export is able to help save the plot for sure, but if you want high-quality figures, by using:
+
+```{r, , eval=F, echo=T}
+jpeg/png/pdf/tiff('rplot.jpg/png/pdf/tif', width = 8, height = 8, unit="in", res=300)
+plot(x,y)
+dev.off()
 ```
