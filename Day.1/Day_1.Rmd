@@ -1,6 +1,9 @@
 ---
-title: "Day 1 Tutorial"
-output: html_document
+title: "Day 1 tutorial: R Basics"
+output: 
+  html_notebook:
+    toc: true
+    toc_depth: 3
 ---
 
 ```{r setup, include=FALSE}
