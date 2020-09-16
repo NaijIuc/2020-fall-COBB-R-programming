@@ -1767,12 +1767,16 @@ summary {
 <li><a href="#functions">Functions</a></li>
 <li><a href="#loops">Loops</a></li>
 </ul></li>
+<li><a href="#apply-family"><span><code>Apply</code></span> family</a></li>
+<li><a href="#intro-to-ggplot2">Intro to <span>ggplot2</span></a></li>
+<li><a href="#nicely-output-r-markdown">Nicely output: <span>R markdown</span></a></li>
 </ul>
 </div>
 
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-text-begin -->
+<p><strong>The aim of the advanced R tutorial is to show one how to develop one’s own tools when there is no packages/functions developed focus on a specific question. Therefore, one may need to write a function to associate with the data; generate fancy plots for publications, and generate a nicely readable report for a variety of purpose.</strong></p>
 <div id="functions-and-loops" class="section level2">
 <h2>Functions and loops</h2>
 <div id="functions" class="section level3">
@@ -1790,32 +1794,297 @@ summary {
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbIiMgQ29tbW9uIGZ1bmN0aW9ucyBzdHJ1Y3R1cmU6IiwibXlmdW5jdGlvbiA8LSBmdW5jdGlvbihhcmcxLCBhcmcyLCAuLi4gKXsiLCJzdGF0ZW1lbnRzIiwicmV0dXJuKG9iamVjdCkiLCJ9IiwiIiwiIyBFeGFtcGxlOiIsIm15ZnVuY3QgPC0gZnVuY3Rpb24oeCl7IiwiICB5PXheMyt4XjIreCsxIiwifSIsInggPC0gc2VxKC0xMCwxMCwwLjUpIiwieSA8LSBteWZ1bmN0KHgpIiwiIiwiIyBwbG90KHgseSwgdHlwZSA9IFwibFwiKSJdfQ== -->
+<!-- rnb-source-begin eyJkYXRhIjpbIiMgQ29tbW9uIGZ1bmN0aW9ucyBzdHJ1Y3R1cmU6IiwibXlmdW5jdGlvbiA8LSBmdW5jdGlvbihhcmcxLCBhcmcyLCAuLi4pIHtcbiAgICBzdGF0ZW1lbnRzXG4gICAgcmV0dXJuKG9iamVjdClcbn0iLCIiLCIjIEV4YW1wbGU6IiwibXlmdW5jdCA8LSBmdW5jdGlvbih4KSB7XG4gICAgeSA9IHheMyArIHheMiArIHggKyAxXG59IiwieCA8LSBzZXEoLTEwLCAxMCwgMC41KSIsInkgPC0gbXlmdW5jdCh4KSIsIiIsIiMgcGxvdCh4LHksIHR5cGUgPSAnbCcpIl19 -->
 <pre class="r"><code># Common functions structure:
-myfunction &lt;- function(arg1, arg2, ... ){
-statements
-return(object)
+myfunction &lt;- function(arg1, arg2, ...) {
+    statements
+    return(object)
 }
 
 # Example:
-myfunct &lt;- function(x){
-  y=x^3+x^2+x+1
+myfunct &lt;- function(x) {
+    y = x^3 + x^2 + x + 1
 }
-x &lt;- seq(-10,10,0.5)
+x &lt;- seq(-10, 10, 0.5)
 y &lt;- myfunct(x)
 
-# plot(x,y, type = &quot;l&quot;)</code></pre>
+# plot(x,y, type = &#39;l&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 <div id="loops" class="section level3">
 <h3>Loops</h3>
+<p>This section will discuss three loops: <code>for</code>, <code>while</code>, and <code>repeat</code> with the additional clauses <code>break</code> and <code>next</code>.</p>
+<p>The <code>for</code> loop constructs implies that the number of iterations is fixed and known in advance;</p>
+<p>The <code>while</code> loop, set in the middle of the figure above, is made of an initialization block as before, followed by a logical condition;</p>
+<p>The <code>repeat</code> loop is similar to the while loop, but it is made so that the blocks of instructions i1 and i2 are executed at least once, no matter what the result of the condition;</p>
+<p><code>break</code> executes and the innermost loop is interrupted with a direct jump to the instruction following the inner loop;</p>
+<p><code>next</code> discontinues a particular iteration and jumps to the next cycle</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbIiMgU3RydWN0dXJlIG9mIGZvciBsb29wOiIsImZvciAodmFsIGluIHNlcXVlbmNlKSB7XG4gICAgc3RhdGVtZW50XG59IiwiIiwiIyBFeGFtcGxlIDEgb2YgZm9yIGxvb3A6IiwiZm9yIChpIGluIDE6NSkge1xuICAgIHByaW50KGkpXG59IiwiIyBFeGFtcGxlIDIgb2YgZm9yIGxvb3A6IiwibSA9IDIwIiwiZm9yIChrIGluIDE6bSkge1xuICAgIGlmICghayUlMikgXG4gICAgICAgIG5leHRcbiAgICBwcmludChrKVxufSIsIi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSIsIiMgU3RydWN0dXJlIG9mIHdoaWxlIGxvb3A6Iiwid2hpbGUgKHRlc3RfZXhwcmVzc2lvbikge1xuICAgIHN0YXRlbWVudFxufSIsIiIsIiMgRXhhbXBsZSBvZiB3aGlsZSBsb29wOiIsInYgPC0gYyhcIkhleSwgd2hpbGUgbG9vcFwiKSIsImNudCA8LSAyIiwid2hpbGUgKGNudCA8IDcpIHtcbiAgICBjYXQoY250LCBcIiBcIiwgdiwgXCJcXG5cIilcbiAgICBjbnQgPSBjbnQgKyAxXG59IiwiLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIiwiIyBTdHJ1Y3R1cmUgb2YgcmVwZWF0IGxvb3A6IiwicmVwZWF0IHtcbiAgICBjb21tYW5kc1xuICAgIGlmIChjb25kaXRpb24pIHtcbiAgICAgICAgYnJlYWtcbiAgICB9XG59IiwiIiwiIyBFeGFtcGxlIG9mIHJlcGVhdCBsb29wIiwidiA8LSBjKFwiSGV5LCByZXBlYXQgbG9vcFwiKSIsImNudCA8LSAyIiwicmVwZWF0IHtcbiAgICBjYXQoY250LCBcIiBcIiwgdiwgXCJcXG5cIilcbiAgICBjbnQgPC0gY250ICsgMVxuICAgIGlmIChjbnQgPiA1KSB7XG4gICAgICAgIGJyZWFrXG4gICAgfVxufSJdfQ== -->
+<pre class="r"><code># Structure of for loop:
+for (val in sequence) {
+    statement
+}
+
+# Example 1 of for loop:
+for (i in 1:5) {
+    print(i)
+}
+# Example 2 of for loop:
+m = 20
+for (k in 1:m) {
+    if (!k%%2) 
+        next
+    print(k)
+}
+---------------------------------------------
+# Structure of while loop:
+while (test_expression) {
+    statement
+}
+
+# Example of while loop:
+v &lt;- c(&quot;Hey, while loop&quot;)
+cnt &lt;- 2
+while (cnt &lt; 7) {
+    cat(cnt, &quot; &quot;, v, &quot;\n&quot;)
+    cnt = cnt + 1
+}
+---------------------------------------------
+# Structure of repeat loop:
+repeat {
+    commands
+    if (condition) {
+        break
+    }
+}
+
+# Example of repeat loop
+v &lt;- c(&quot;Hey, repeat loop&quot;)
+cnt &lt;- 2
+repeat {
+    cat(cnt, &quot; &quot;, v, &quot;\n&quot;)
+    cnt &lt;- cnt + 1
+    if (cnt &gt; 5) {
+        break
+    }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="apply-family" class="section level2">
+<h2><a href="https://www.datacamp.com/community/tutorials/r-tutorial-apply-family"><code>Apply</code></a> family</h2>
+<p>To make a <code>for</code> loop more efficient, <code>apply()</code> function is introduced in R. The <code>apply()</code> family pertains to the R base package and is populated with functions to manipulate slices of data from matrices, arrays, lists, and data frames in a repetitive way. These functions allow crossing the data in a number of ways and avoid explicit use of loop constructs. They act on an input list, matrix, or array and apply a named function with one or several optional arguments. The apply functions (<code>apply</code>, <code>sapply</code>, <code>lapply</code> etc.) are marginally faster than a regular for loop.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbIk4gPC0gMTAwMDAiLCJ4MSA8LSBydW5pZihOKSIsIngyIDwtIHJ1bmlmKE4pIiwiZCA8LSBhcy5kYXRhLmZyYW1lKGNiaW5kKHgxLCB4MikpIiwiIiwic3lzdGVtLnRpbWUoZm9yIChpIGluIGMoMTpsZW5ndGgoZFssIDFdKSkpIHtcbiAgICBkJG1lYW4xW2ldIDwtIG1lYW4oYyhkW2ksIDFdLCBkW2ksIDJdKSlcbn0pIiwiIiwic3lzdGVtLnRpbWUoZCRtZWFuMiA8LSBhcHBseShkLCAxLCBtZWFuKSkiLCIiLCIjIHN5c3RlbS50aW1lKGQkbWVhbjMgPC0gcm93Lm5hbWVzKGQpKSIsIiIsImxpYnJhcnkocGFyYWxsZWwpIiwibnVtQ29yZXMgPC0gZGV0ZWN0Q29yZXMoKSIsImNsIDwtIG1ha2VDbHVzdGVyKG51bUNvcmVzKSIsInN5c3RlbS50aW1lKGQkbWVhbjMgPC0gcGFyQXBwbHkoY2wsIGQsIDEsIG1lYW4pKSIsInN0b3BDbHVzdGVyKGNsKSJdfQ== -->
+<pre class="r"><code>N &lt;- 10000
+x1 &lt;- runif(N)
+x2 &lt;- runif(N)
+d &lt;- as.data.frame(cbind(x1, x2))
+
+system.time(for (i in c(1:length(d[, 1]))) {
+    d$mean1[i] &lt;- mean(c(d[i, 1], d[i, 2]))
+})
+
+system.time(d$mean2 &lt;- apply(d, 1, mean))
+
+# system.time(d$mean3 &lt;- row.names(d))
+
+library(parallel)
+numCores &lt;- detectCores()
+cl &lt;- makeCluster(numCores)
+system.time(d$mean3 &lt;- parApply(cl, d, 1, mean))
+stopCluster(cl)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="intro-to-ggplot2" class="section level2">
+<h2>Intro to <a href="https://ggplot2-book.org/index.html">ggplot2</a></h2>
+<p>Basic, use qplot() function (quick plot), designed primarily for interactive use: it makes several assumptions that speed most cases.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkoZ2dwbG90MikiLCJkYXRhKFwiZGlhbW9uZHNcIikiLCJoZWFkKGRpYW1vbmRzKSIsIiIsInFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRpYW1vbmRzKSIsInFwbG90KGxvZyhjYXJhdCksIGxvZyhwcmljZSksIGRhdGEgPSBkaWFtb25kcykiLCJxcGxvdChjYXJhdCwgeCAqIHkgKiB6LCBkYXRhID0gZGlhbW9uZHMpIiwiIiwiZHNtYWxsIDwtIGRpYW1vbmRzW3NhbXBsZShucm93KGRpYW1vbmRzKSwgMTAwKSwgXSIsInFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRzbWFsbCwgY29sID0gY29sb3IpIiwiIiwiIyBzaGFwZSA9IGN1dDsgYWxwaGEgPSAxICh0cmFuc3BhcmVudCkgLi4uIl19 -->
+<pre class="r"><code>library(ggplot2)
+data(&quot;diamonds&quot;)
+head(diamonds)
+
+qplot(carat, price, data = diamonds)
+qplot(log(carat), log(price), data = diamonds)
+qplot(carat, x * y * z, data = diamonds)
+
+dsmall &lt;- diamonds[sample(nrow(diamonds), 100), ]
+qplot(carat, price, data = dsmall, col = color)
+
+# shape = cut; alpha = 1 (transparent) ...</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Plot geoms (geometics) geom = point/ smooth/ boxplot/ path/ histogram …</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoicXBsb3QoY29sb3IsIHByaWNlLCBkYXRhID0gZHNtYWxsLCBnZW9tID0gXCJib3hwbG90XCIpICsgZ2VvbV9ib3hwbG90KG91dGxpZXIuY29sb3IgPSBcImdyZWVuXCIsIG91dGxpZXIuc2l6ZSA9IDMsIGZpbGwgPSBcInJlZFwiLCBjb2wgPSBcImJsdWVcIikifQ== -->
+<pre class="r"><code>qplot(color, price, data = dsmall, geom = &quot;boxplot&quot;) + geom_boxplot(outlier.color = &quot;green&quot;, outlier.size = 3, fill = &quot;red&quot;, col = &quot;blue&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>When designing multi layered plots with different data sources it can get in the way. This section describes what those defaults are, and how they map to the fuller ggplot() syntax.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbInFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRzbWFsbCwgZ2VvbSA9IGMoXCJwb2ludFwiLCBcInNtb290aFwiKSkiLCJnZ3Bsb3QoZHNtYWxsLCBhZXMoY2FyYXQsIHByaWNlKSkgKyBnZW9tX3BvaW50KCkgKyBnZW9tX3Ntb290aCgpIl19 -->
+<pre class="r"><code>qplot(carat, price, data = dsmall, geom = c(&quot;point&quot;, &quot;smooth&quot;))
+ggplot(dsmall, aes(carat, price)) + geom_point() + geom_smooth()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>When the conditions get more complecated, like we want to check the carat and price relationship under different cut, or cut and color…</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdnIDwtIGdncGxvdChkaWFtb25kcywgYWVzKHggPSBjYXJhdCwgeSA9IHByaWNlLCBjb2xvciA9IGN1dCkpICsgZ2VvbV9wb2ludCgpICsgbGFicyh0aXRsZSA9IFwiU2NhdHRlcnBsb3RcIiwgeCA9IFwiQ2FyYXRcIiwgeSA9IFwiUHJpY2VcIikiLCJnZyArIGZhY2V0X3dyYXAofmN1dCwgbmNvbCA9IDMpIiwiZ2cgKyBmYWNldF9ncmlkKGNvbG9yIH4gY3V0KSJdfQ== -->
+<pre class="r"><code>gg &lt;- ggplot(diamonds, aes(x = carat, y = price, color = cut)) + geom_point() + labs(title = &quot;Scatterplot&quot;, x = &quot;Carat&quot;, y = &quot;Price&quot;)
+gg + facet_wrap(~cut, ncol = 3)
+gg + facet_grid(color ~ cut)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Except for the above built-in functions from ggplot, some other interactive and functional data visualization packages relying on <code>ggplot</code> are also developed for different types of figure generation as ggplot’s extension, and one can find it <a href="https://exts.ggplot2.tidyverse.org/ggiraph.html"><strong>HERE</strong></a>, and famous ones like ggraph, ggtree are also popular in biological research.</p>
+</div>
+<div id="nicely-output-r-markdown" class="section level2">
+<h2>Nicely output: <a href="https://rmarkdown.rstudio.com/">R markdown</a></h2>
+<p>The combination of R and markdown, a text enriched conversion tool and it allows one to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid formats (PDF, HTML, MS Word), even presentation slides. R markdown even allows one to write academic manuscripts with a well-organized bibliography.</p>
+<p><strong>This is a quick reference:</strong></p>
+<pre><code># inline code
+&#39;&#39;r 2*2 `&#39;
+
+
+install.packages(&quot;rmarkdown&quot;)
+install.packages(&quot;rticles&quot;)
+Text formatting 
+------------------------------------------------------------
+
+*italic*  or _italic_
+**bold**   __bold__
+`code`
+superscript^2^ and subscript~2~
+
+Headings
+------------------------------------------------------------
+
+# 1st Level Header
+
+## 2nd Level Header
+
+### 3rd Level Header
+
+Lists
+------------------------------------------------------------
+
+*   Bulleted list item 1
+
+*   Item 2
+
+    * Item 2a
+
+    * Item 2b
+
+1.  Numbered list item 1
+
+1.  Item 2. The numbers are incremented automatically in the output.
+
+Links and images
+------------------------------------------------------------
+
+&lt;http://example.com&gt;
+
+[linked phrase](http://example.com)
+
+![optional caption text](path/to/img.png)
+
+Tables 
+------------------------------------------------------------
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell</code></pre>
+<p><strong>Code chunk options:</strong></p>
+<p>Chunk output can be customized arguments set in the {} of a chunk header. These arguments are most commonly used:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>eval</code></td>
+<td>TRUE</td>
+<td>Whether to evaluate the code and include its results</td>
+</tr>
+<tr class="even">
+<td><code>echo</code></td>
+<td>TRUE</td>
+<td>Whether to display code along with its results</td>
+</tr>
+<tr class="odd">
+<td><code>warning</code></td>
+<td>TRUE</td>
+<td>Whether to display warnings</td>
+</tr>
+<tr class="even">
+<td><code>error</code></td>
+<td>FALSE</td>
+<td>Whether to display errors</td>
+</tr>
+<tr class="odd">
+<td><code>message</code></td>
+<td>TRUE</td>
+<td>Whether to display messages</td>
+</tr>
+<tr class="even">
+<td><code>tidy</code></td>
+<td>FALSE</td>
+<td>Whether to reformat code in a tidy way when displaying it</td>
+</tr>
+<tr class="odd">
+<td><code>results</code></td>
+<td>“markup”</td>
+<td>“markup”, “asis”, “hold”, or “hide”</td>
+</tr>
+<tr class="even">
+<td><code>cache</code></td>
+<td>FALSE</td>
+<td>Whether to cache results for future renders</td>
+</tr>
+<tr class="odd">
+<td><code>comment</code></td>
+<td>“##”</td>
+<td>Comment character to preface results with</td>
+</tr>
+<tr class="even">
+<td><code>fig.width</code></td>
+<td>7</td>
+<td>Width in inches for plots created in chunk</td>
+</tr>
+<tr class="odd">
+<td><code>fig.height</code></td>
+<td>7</td>
+<td>Height in inches for plots created in chunk</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-text-end -->
 </div>
-</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRheSAxIHR1dG9yaWFsOiBBZHZhbmNlZCBSIg0Kb3V0cHV0OiANCiAgaHRtbF9ub3RlYm9vazoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZGVwdGg6IDMNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCmBgYA0KDQojIyBGdW5jdGlvbnMgYW5kIGxvb3BzDQoNCiMjIyBGdW5jdGlvbnMNCg0KV2h5IHdyaXRlIGZ1bmN0aW9ucz8NCg0KKiBSZXBldGl0aXZlIHByb2Nlc3Nlcw0KKiBOb3RoaW5nIG1heSBleGlzdCBmb3Igb3VyIHB1cnBvc2UNCiogQ3VzdG9taXppbmcgZXhpc3RpbmcgZnVuY3Rpb24NCiAgKiBXZSBtYXkgbmVlZCB0byB0d2VhayB0aGUgb3V0cHV0IG9mIGEgZnVuY3Rpb24NCiAgKiBXZSBtYXkgb25seSBuZWVkIHBhcnQgb2YgYSBsYXJnZXIgZnVuY3Rpb24NCiAgKiBXZSBjYW4gY3VzdG9taXplIGZvciBpbmNyZWFzZWQgc3BlZWQNCiAgDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVR9DQoNCiMgQ29tbW9uIGZ1bmN0aW9ucyBzdHJ1Y3R1cmU6DQpteWZ1bmN0aW9uIDwtIGZ1bmN0aW9uKGFyZzEsIGFyZzIsIC4uLiApew0Kc3RhdGVtZW50cw0KcmV0dXJuKG9iamVjdCkNCn0NCg0KIyBFeGFtcGxlOg0KbXlmdW5jdCA8LSBmdW5jdGlvbih4KXsNCiAgeT14XjMreF4yK3grMQ0KfQ0KeCA8LSBzZXEoLTEwLDEwLDAuNSkNCnkgPC0gbXlmdW5jdCh4KQ0KDQojIHBsb3QoeCx5LCB0eXBlID0gImwiKQ0KYGBgDQojIyMgTG9vcHMNCg0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRheSAxIHR1dG9yaWFsOiBBZHZhbmNlZCBSIg0Kb3V0cHV0OiANCiAgaHRtbF9ub3RlYm9vazoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZGVwdGg6IDMNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCmBgYA0KDQoqKlRoZSBhaW0gb2YgdGhlIGFkdmFuY2VkIFIgdHV0b3JpYWwgaXMgdG8gc2hvdyBvbmUgaG93IHRvIGRldmVsb3Agb25lJ3Mgb3duIHRvb2xzIHdoZW4gdGhlcmUgaXMgbm8gcGFja2FnZXMvZnVuY3Rpb25zIGRldmVsb3BlZCBmb2N1cyBvbiBhIHNwZWNpZmljIHF1ZXN0aW9uLiBUaGVyZWZvcmUsIG9uZSBtYXkgbmVlZCB0byB3cml0ZSBhIGZ1bmN0aW9uIHRvIGFzc29jaWF0ZSB3aXRoIHRoZSBkYXRhOyBnZW5lcmF0ZSBmYW5jeSBwbG90cyBmb3IgcHVibGljYXRpb25zLCBhbmQgZ2VuZXJhdGUgYSBuaWNlbHkgcmVhZGFibGUgcmVwb3J0IGZvciBhIHZhcmlldHkgb2YgcHVycG9zZS4qKg0KDQojIyBGdW5jdGlvbnMgYW5kIGxvb3BzDQoNCiMjIyBGdW5jdGlvbnMNCg0KV2h5IHdyaXRlIGZ1bmN0aW9ucz8NCg0KKiBSZXBldGl0aXZlIHByb2Nlc3Nlcw0KKiBOb3RoaW5nIG1heSBleGlzdCBmb3Igb3VyIHB1cnBvc2UNCiogQ3VzdG9taXppbmcgZXhpc3RpbmcgZnVuY3Rpb24NCiAgKiBXZSBtYXkgbmVlZCB0byB0d2VhayB0aGUgb3V0cHV0IG9mIGEgZnVuY3Rpb24NCiAgKiBXZSBtYXkgb25seSBuZWVkIHBhcnQgb2YgYSBsYXJnZXIgZnVuY3Rpb24NCiAgKiBXZSBjYW4gY3VzdG9taXplIGZvciBpbmNyZWFzZWQgc3BlZWQNCiAgDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0KDQojIENvbW1vbiBmdW5jdGlvbnMgc3RydWN0dXJlOg0KbXlmdW5jdGlvbiA8LSBmdW5jdGlvbihhcmcxLCBhcmcyLCAuLi4gKXsNCnN0YXRlbWVudHMNCnJldHVybihvYmplY3QpDQp9DQoNCiMgRXhhbXBsZToNCm15ZnVuY3QgPC0gZnVuY3Rpb24oeCl7DQogIHk9eF4zK3heMit4KzENCn0NCnggPC0gc2VxKC0xMCwxMCwwLjUpDQp5IDwtIG15ZnVuY3QoeCkNCg0KIyBwbG90KHgseSwgdHlwZSA9ICJsIikNCmBgYA0KIyMjIExvb3BzDQoNClRoaXMgc2VjdGlvbiB3aWxsIGRpc2N1c3MgdGhyZWUgbG9vcHM6IGBmb3JgLCBgd2hpbGVgLCBhbmQgYHJlcGVhdGAgd2l0aCB0aGUgYWRkaXRpb25hbCBjbGF1c2VzIGBicmVha2AgYW5kIGBuZXh0YC4NCg0KVGhlIGBmb3JgIGxvb3AgY29uc3RydWN0cyBpbXBsaWVzIHRoYXQgdGhlIG51bWJlciBvZiBpdGVyYXRpb25zIGlzIGZpeGVkIGFuZCBrbm93biBpbiBhZHZhbmNlOw0KDQpUaGUgYHdoaWxlYCBsb29wLCBzZXQgaW4gdGhlIG1pZGRsZSBvZiB0aGUgZmlndXJlIGFib3ZlLCBpcyBtYWRlIG9mIGFuIGluaXRpYWxpemF0aW9uIGJsb2NrIGFzIGJlZm9yZSwgZm9sbG93ZWQgYnkgYSBsb2dpY2FsIGNvbmRpdGlvbjsNCg0KVGhlIGByZXBlYXRgIGxvb3AgaXMgc2ltaWxhciB0byB0aGUgd2hpbGUgbG9vcCwgYnV0IGl0IGlzIG1hZGUgc28gdGhhdCB0aGUgYmxvY2tzIG9mIGluc3RydWN0aW9ucyBpMSBhbmQgaTIgYXJlIGV4ZWN1dGVkIGF0IGxlYXN0IG9uY2UsIG5vIG1hdHRlciB3aGF0IHRoZSByZXN1bHQgb2YgdGhlIGNvbmRpdGlvbjsNCg0KYGJyZWFrYCBleGVjdXRlcyBhbmQgdGhlIGlubmVybW9zdCBsb29wIGlzIGludGVycnVwdGVkIHdpdGggYSBkaXJlY3QganVtcCB0byB0aGUgaW5zdHJ1Y3Rpb24gZm9sbG93aW5nIHRoZSBpbm5lciBsb29wOw0KDQpgbmV4dGAgZGlzY29udGludWVzIGEgcGFydGljdWxhciBpdGVyYXRpb24gYW5kIGp1bXBzIHRvIHRoZSBuZXh0IGN5Y2xlDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0KIyBTdHJ1Y3R1cmUgb2YgZm9yIGxvb3A6DQpmb3IgKHZhbCBpbiBzZXF1ZW5jZSkgew0KICBzdGF0ZW1lbnQNCn0NCg0KIyBFeGFtcGxlIDEgb2YgZm9yIGxvb3A6DQpmb3IgKGkgaW4gMTo1KSB7DQogIHByaW50KGkpDQp9DQojIEV4YW1wbGUgMiBvZiBmb3IgbG9vcDoNCm09MjANCmZvciAoayBpbiAxOm0pew0KICBpZiAoIWsgJSUgMikNCiAgICBuZXh0DQogICAgcHJpbnQoaykNCn0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIFN0cnVjdHVyZSBvZiB3aGlsZSBsb29wOg0Kd2hpbGUgKHRlc3RfZXhwcmVzc2lvbikgew0KICAgc3RhdGVtZW50DQp9DQoNCiMgRXhhbXBsZSBvZiB3aGlsZSBsb29wOg0KdiA8LSBjKCJIZXksIHdoaWxlIGxvb3AiKQ0KY250IDwtIDINCndoaWxlIChjbnQgPCA3KSB7DQogICBjYXQoY250LCAiICIsdiwgIlxuIikNCiAgIGNudCA9IGNudCArIDENCn0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KICANCiMgU3RydWN0dXJlIG9mIHJlcGVhdCBsb29wOg0KcmVwZWF0IHsgDQogICBjb21tYW5kcyANCiAgIGlmKGNvbmRpdGlvbikgew0KICAgICAgYnJlYWsNCiAgIH0NCn0NCg0KIyBFeGFtcGxlIG9mIHJlcGVhdCBsb29wDQp2IDwtIGMoIkhleSwgcmVwZWF0IGxvb3AiKQ0KY250IDwtIDINCnJlcGVhdCB7DQogICBjYXQoY250LCAiICIsdiwgIlxuIikNCiAgIGNudCA8LSBjbnQrMQ0KICAgaWYoY250ID4gNSkgew0KICAgICAgYnJlYWsNCiAgIH0NCn0NCmBgYA0KDQojIyBbYEFwcGx5YF0oaHR0cHM6Ly93d3cuZGF0YWNhbXAuY29tL2NvbW11bml0eS90dXRvcmlhbHMvci10dXRvcmlhbC1hcHBseS1mYW1pbHkpIGZhbWlseQ0KDQpUbyBtYWtlIGEgYGZvcmAgbG9vcCBtb3JlIGVmZmljaWVudCwgYGFwcGx5KClgIGZ1bmN0aW9uIGlzIGludHJvZHVjZWQgaW4gUi4gVGhlIGBhcHBseSgpYCBmYW1pbHkgcGVydGFpbnMgdG8gdGhlIFIgYmFzZSBwYWNrYWdlIGFuZCBpcyBwb3B1bGF0ZWQgd2l0aCBmdW5jdGlvbnMgdG8gbWFuaXB1bGF0ZSBzbGljZXMgb2YgZGF0YSBmcm9tIG1hdHJpY2VzLCBhcnJheXMsIGxpc3RzLCBhbmQgZGF0YSBmcmFtZXMgaW4gYSByZXBldGl0aXZlIHdheS4gVGhlc2UgZnVuY3Rpb25zIGFsbG93IGNyb3NzaW5nIHRoZSBkYXRhIGluIGEgbnVtYmVyIG9mIHdheXMgYW5kIGF2b2lkIGV4cGxpY2l0IHVzZSBvZiBsb29wIGNvbnN0cnVjdHMuIFRoZXkgYWN0IG9uIGFuIGlucHV0IGxpc3QsIG1hdHJpeCwgb3IgYXJyYXkgYW5kIGFwcGx5IGEgbmFtZWQgZnVuY3Rpb24gd2l0aCBvbmUgb3Igc2V2ZXJhbCBvcHRpb25hbCBhcmd1bWVudHMuIFRoZSBhcHBseSBmdW5jdGlvbnMgKGBhcHBseWAsIGBzYXBwbHlgLCBgbGFwcGx5YCBldGMuKSBhcmUgbWFyZ2luYWxseSBmYXN0ZXIgdGhhbiBhIHJlZ3VsYXIgZm9yIGxvb3AuDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpOIDwtIDEwMDAwDQp4MSA8LSBydW5pZihOKQ0KeDIgPC0gcnVuaWYoTikNCmQgPC0gYXMuZGF0YS5mcmFtZShjYmluZCh4MSwgeDIpKQ0KDQpzeXN0ZW0udGltZShmb3IgKGkgaW4gYygxOmxlbmd0aChkWywgMV0pKSkgew0KICAgIGQkbWVhbjFbaV0gPC0gbWVhbihjKGRbaSwgMV0sIGRbaSwgMl0pKQ0KfSkNCg0Kc3lzdGVtLnRpbWUoZCRtZWFuMiA8LSBhcHBseShkLCAxLCBtZWFuKSkNCg0KIyBzeXN0ZW0udGltZShkJG1lYW4zIDwtIHJvdy5uYW1lcyhkKSkNCg0KbGlicmFyeShwYXJhbGxlbCkNCm51bUNvcmVzIDwtIGRldGVjdENvcmVzKCkNCmNsIDwtIG1ha2VDbHVzdGVyKG51bUNvcmVzKQ0Kc3lzdGVtLnRpbWUoZCRtZWFuMyA8LSBwYXJBcHBseShjbCxkLDEsIG1lYW4pKQ0Kc3RvcENsdXN0ZXIoY2wpDQpgYGANCg0KIyMgSW50cm8gdG8gW2dncGxvdDJdKGh0dHBzOi8vZ2dwbG90Mi1ib29rLm9yZy9pbmRleC5odG1sKQ0KDQpCYXNpYywgdXNlIHFwbG90KCkgZnVuY3Rpb24gKHF1aWNrIHBsb3QpLCBkZXNpZ25lZCBwcmltYXJpbHkgZm9yIGludGVyYWN0aXZlIHVzZTogaXQgbWFrZXMgc2V2ZXJhbCBhc3N1bXB0aW9ucyB0aGF0IHNwZWVkIG1vc3QgY2FzZXMuDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpsaWJyYXJ5KGdncGxvdDIpDQpkYXRhKCJkaWFtb25kcyIpDQpoZWFkKGRpYW1vbmRzKQ0KDQpxcGxvdChjYXJhdCwgcHJpY2UsIGRhdGEgPSBkaWFtb25kcykNCnFwbG90KGxvZyhjYXJhdCksbG9nKHByaWNlKSxkYXRhID0gZGlhbW9uZHMpDQpxcGxvdChjYXJhdCwgeCp5KnosIGRhdGEgPSBkaWFtb25kcykNCg0KZHNtYWxsIDwtIGRpYW1vbmRzW3NhbXBsZShucm93KGRpYW1vbmRzKSwxMDApLF0NCnFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRzbWFsbCwgY29sPWNvbG9yKQ0KDQojIHNoYXBlID0gY3V0Ow0KIyBhbHBoYSA9IDEgKHRyYW5zcGFyZW50KQ0KIyAuLi4NCmBgYA0KDQpQbG90IGdlb21zIChnZW9tZXRpY3MpIGdlb20gPSBwb2ludC8gc21vb3RoLyBib3hwbG90LyBwYXRoLyBoaXN0b2dyYW0g4oCmDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpxcGxvdChjb2xvciwgcHJpY2UsIGRhdGEgPSBkc21hbGwsIGdlb20gPSAnYm94cGxvdCcpICsgDQogIGdlb21fYm94cGxvdChvdXRsaWVyLmNvbG9yID0gImdyZWVuIiwNCiAgICAgICAgICAgICAgIG91dGxpZXIuc2l6ZSA9IDMsDQogICAgICAgICAgICAgICBmaWxsID0gInJlZCIsDQogICAgICAgICAgICAgICBjb2wgPSAiYmx1ZSIpDQpgYGANCg0KV2hlbiBkZXNpZ25pbmcgbXVsdGkgbGF5ZXJlZCBwbG90cyB3aXRoIGRpZmZlcmVudCBkYXRhIHNvdXJjZXMgaXQgY2FuIGdldCBpbiB0aGUgd2F5LiBUaGlzIHNlY3Rpb24gZGVzY3JpYmVzIHdoYXQgdGhvc2UgZGVmYXVsdHMgYXJlLCBhbmQgaG93IHRoZXkgbWFwIHRvIHRoZSBmdWxsZXIgZ2dwbG90KCkgc3ludGF4Lg0KDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0KcXBsb3QoY2FyYXQsIHByaWNlLCBkYXRhID0gZHNtYWxsLCBnZW9tID0gYygicG9pbnQiLCAic21vb3RoIikpDQpnZ3Bsb3QoZHNtYWxsLCBhZXMoY2FyYXQsIHByaWNlKSkgKyBnZW9tX3BvaW50KCkgKyBnZW9tX3Ntb290aCgpDQpgYGANCg0KV2hlbiB0aGUgY29uZGl0aW9ucyBnZXQgbW9yZSBjb21wbGVjYXRlZCwgbGlrZSB3ZSB3YW50IHRvIGNoZWNrIHRoZSBjYXJhdCBhbmQgcHJpY2UgcmVsYXRpb25zaGlwIHVuZGVyIGRpZmZlcmVudCBjdXQsIG9yIGN1dCBhbmQgY29sb3LigKYNCg0KYGBge3IsIGV2YWw9RiwgZWNobz1ULCB0aWR5ID0gVH0NCmdnIDwtIGdncGxvdChkaWFtb25kcywgYWVzKHg9Y2FyYXQsIHk9cHJpY2UsIGNvbG9yPWN1dCkpICsNCiAgZ2VvbV9wb2ludCgpICsgbGFicyh0aXRsZT0iU2NhdHRlcnBsb3QiLCB4PSJDYXJhdCIsIHk9IlByaWNlIikNCmdnICsgZmFjZXRfd3JhcCggfiBjdXQsIG5jb2w9MykNCmdnICsgZmFjZXRfZ3JpZChjb2xvciB+IGN1dCkgDQpgYGANCg0KRXhjZXB0IGZvciB0aGUgYWJvdmUgYnVpbHQtaW4gZnVuY3Rpb25zIGZyb20gZ2dwbG90LCBzb21lIG90aGVyIGludGVyYWN0aXZlIGFuZCBmdW5jdGlvbmFsIGRhdGEgdmlzdWFsaXphdGlvbiBwYWNrYWdlcyByZWx5aW5nIG9uIGBnZ3Bsb3RgIGFyZSBhbHNvIGRldmVsb3BlZCBmb3IgZGlmZmVyZW50IHR5cGVzIG9mIGZpZ3VyZSBnZW5lcmF0aW9uIGFzIGdncGxvdCdzIGV4dGVuc2lvbiwgYW5kIG9uZSBjYW4gZmluZCBpdCBbKipIRVJFKipdKGh0dHBzOi8vZXh0cy5nZ3Bsb3QyLnRpZHl2ZXJzZS5vcmcvZ2dpcmFwaC5odG1sKSwgYW5kIGZhbW91cyBvbmVzIGxpa2UgZ2dyYXBoLCBnZ3RyZWUgYXJlIGFsc28gcG9wdWxhciBpbiBiaW9sb2dpY2FsIHJlc2VhcmNoLg0KDQojIyBOaWNlbHkgb3V0cHV0OiBbUiBtYXJrZG93bl0oaHR0cHM6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20vKQ0KDQpUaGUgY29tYmluYXRpb24gb2YgUiBhbmQgbWFya2Rvd24sIGEgdGV4dCBlbnJpY2hlZCBjb252ZXJzaW9uIHRvb2wgYW5kIGl0IGFsbG93cyBvbmUgdG8gd3JpdGUgdXNpbmcgYW4gZWFzeS10by1yZWFkLCBlYXN5LXRvLXdyaXRlIHBsYWluIHRleHQgZm9ybWF0LCB0aGVuIGNvbnZlcnQgaXQgdG8gc3RydWN0dXJhbGx5IHZhbGlkIGZvcm1hdHMgKFBERiwgSFRNTCwgTVMgV29yZCksIGV2ZW4gcHJlc2VudGF0aW9uIHNsaWRlcy4gUiBtYXJrZG93biBldmVuIGFsbG93cyBvbmUgdG8gd3JpdGUgYWNhZGVtaWMgbWFudXNjcmlwdHMgd2l0aCBhIHdlbGwtb3JnYW5pemVkIGJpYmxpb2dyYXBoeS4gDQoNCioqVGhpcyBpcyBhIHF1aWNrIHJlZmVyZW5jZToqKg0KDQpgYGANCiMgaW5saW5lIGNvZGUNCicnciAyKjIgYCcNCg0KDQppbnN0YWxsLnBhY2thZ2VzKCJybWFya2Rvd24iKQ0KaW5zdGFsbC5wYWNrYWdlcygicnRpY2xlcyIpDQpUZXh0IGZvcm1hdHRpbmcgDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KKml0YWxpYyogIG9yIF9pdGFsaWNfDQoqKmJvbGQqKiAgIF9fYm9sZF9fDQpgY29kZWANCnN1cGVyc2NyaXB0XjJeIGFuZCBzdWJzY3JpcHR+Mn4NCg0KSGVhZGluZ3MNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIDFzdCBMZXZlbCBIZWFkZXINCg0KIyMgMm5kIExldmVsIEhlYWRlcg0KDQojIyMgM3JkIExldmVsIEhlYWRlcg0KDQpMaXN0cw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiogICBCdWxsZXRlZCBsaXN0IGl0ZW0gMQ0KDQoqICAgSXRlbSAyDQoNCiAgICAqIEl0ZW0gMmENCg0KICAgICogSXRlbSAyYg0KDQoxLiAgTnVtYmVyZWQgbGlzdCBpdGVtIDENCg0KMS4gIEl0ZW0gMi4gVGhlIG51bWJlcnMgYXJlIGluY3JlbWVudGVkIGF1dG9tYXRpY2FsbHkgaW4gdGhlIG91dHB1dC4NCg0KTGlua3MgYW5kIGltYWdlcw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCjxodHRwOi8vZXhhbXBsZS5jb20+DQoNCltsaW5rZWQgcGhyYXNlXShodHRwOi8vZXhhbXBsZS5jb20pDQoNCiFbb3B0aW9uYWwgY2FwdGlvbiB0ZXh0XShwYXRoL3RvL2ltZy5wbmcpDQoNClRhYmxlcyANCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpGaXJzdCBIZWFkZXIgIHwgU2Vjb25kIEhlYWRlcg0KLS0tLS0tLS0tLS0tLSB8IC0tLS0tLS0tLS0tLS0NCkNvbnRlbnQgQ2VsbCAgfCBDb250ZW50IENlbGwNCkNvbnRlbnQgQ2VsbCAgfCBDb250ZW50IENlbGwNCmBgYA0KDQoqKkNvZGUgY2h1bmsgb3B0aW9uczoqKg0KDQpDaHVuayBvdXRwdXQgY2FuIGJlIGN1c3RvbWl6ZWQgYXJndW1lbnRzIHNldCBpbiB0aGUge30gb2YgYSBjaHVuayBoZWFkZXIuIFRoZXNlIGFyZ3VtZW50cyBhcmUgbW9zdCBjb21tb25seSB1c2VkOg0KDQpBcmd1bWVudHwgRGVmYXVsdCB8IEVmZmVjdA0KLXwtfC0NCmBldmFsYCB8VFJVRSB8V2hldGhlciB0byBldmFsdWF0ZSB0aGUgY29kZSBhbmQgaW5jbHVkZSBpdHMgcmVzdWx0cw0KYGVjaG9gIHxUUlVFIHxXaGV0aGVyIHRvIGRpc3BsYXkgY29kZSBhbG9uZyB3aXRoIGl0cyByZXN1bHRzDQpgd2FybmluZ2AgfFRSVUUgfFdoZXRoZXIgdG8gZGlzcGxheSB3YXJuaW5ncw0KYGVycm9yYCB8RkFMU0UgfFdoZXRoZXIgdG8gZGlzcGxheSBlcnJvcnMNCmBtZXNzYWdlYCB8VFJVRSB8V2hldGhlciB0byBkaXNwbGF5IG1lc3NhZ2VzDQpgdGlkeWAgfEZBTFNFIHxXaGV0aGVyIHRvIHJlZm9ybWF0IGNvZGUgaW4gYSB0aWR5IHdheSB3aGVuIGRpc3BsYXlpbmcgaXQNCmByZXN1bHRzYCB8Im1hcmt1cCIgfCJtYXJrdXAiLCAiYXNpcyIsICJob2xkIiwgb3IgImhpZGUiDQpgY2FjaGVgIHxGQUxTRSB8V2hldGhlciB0byBjYWNoZSByZXN1bHRzIGZvciBmdXR1cmUgcmVuZGVycw0KYGNvbW1lbnRgIHwiIyMiIHxDb21tZW50IGNoYXJhY3RlciB0byBwcmVmYWNlIHJlc3VsdHMgd2l0aA0KYGZpZy53aWR0aGB8IDcgfFdpZHRoIGluIGluY2hlcyBmb3IgcGxvdHMgY3JlYXRlZCBpbiBjaHVuaw0KYGZpZy5oZWlnaHRgfCA3IHxIZWlnaHQgaW4gaW5jaGVzIGZvciBwbG90cyBjcmVhdGVkIGluIGNodW5r</div>
 
 
 

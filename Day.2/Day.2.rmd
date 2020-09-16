@@ -10,6 +10,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**The aim of the advanced R tutorial is to show one how to develop one's own tools when there is no packages/functions developed focus on a specific question. Therefore, one may need to write a function to associate with the data; generate fancy plots for publications, and generate a nicely readable report for a variety of purpose.**
+
 ## Functions and loops
 
 ### Functions
@@ -23,7 +25,7 @@ Why write functions?
   * We may only need part of a larger function
   * We can customize for increased speed
   
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 
 # Common functions structure:
 myfunction <- function(arg1, arg2, ... ){
@@ -42,4 +44,221 @@ y <- myfunct(x)
 ```
 ### Loops
 
+This section will discuss three loops: `for`, `while`, and `repeat` with the additional clauses `break` and `next`.
 
+The `for` loop constructs implies that the number of iterations is fixed and known in advance;
+
+The `while` loop, set in the middle of the figure above, is made of an initialization block as before, followed by a logical condition;
+
+The `repeat` loop is similar to the while loop, but it is made so that the blocks of instructions i1 and i2 are executed at least once, no matter what the result of the condition;
+
+`break` executes and the innermost loop is interrupted with a direct jump to the instruction following the inner loop;
+
+`next` discontinues a particular iteration and jumps to the next cycle
+```{r, eval=F, echo=T, tidy = T}
+# Structure of for loop:
+for (val in sequence) {
+  statement
+}
+
+# Example 1 of for loop:
+for (i in 1:5) {
+  print(i)
+}
+# Example 2 of for loop:
+m=20
+for (k in 1:m){
+  if (!k %% 2)
+    next
+    print(k)
+}
+---------------------------------------------
+
+# Structure of while loop:
+while (test_expression) {
+   statement
+}
+
+# Example of while loop:
+v <- c("Hey, while loop")
+cnt <- 2
+while (cnt < 7) {
+   cat(cnt, " ",v, "\n")
+   cnt = cnt + 1
+}
+---------------------------------------------
+  
+# Structure of repeat loop:
+repeat { 
+   commands 
+   if(condition) {
+      break
+   }
+}
+
+# Example of repeat loop
+v <- c("Hey, repeat loop")
+cnt <- 2
+repeat {
+   cat(cnt, " ",v, "\n")
+   cnt <- cnt+1
+   if(cnt > 5) {
+      break
+   }
+}
+```
+
+## [`Apply`](https://www.datacamp.com/community/tutorials/r-tutorial-apply-family) family
+
+To make a `for` loop more efficient, `apply()` function is introduced in R. The `apply()` family pertains to the R base package and is populated with functions to manipulate slices of data from matrices, arrays, lists, and data frames in a repetitive way. These functions allow crossing the data in a number of ways and avoid explicit use of loop constructs. They act on an input list, matrix, or array and apply a named function with one or several optional arguments. The apply functions (`apply`, `sapply`, `lapply` etc.) are marginally faster than a regular for loop.
+
+```{r, eval=F, echo=T, tidy = T}
+N <- 10000
+x1 <- runif(N)
+x2 <- runif(N)
+d <- as.data.frame(cbind(x1, x2))
+
+system.time(for (i in c(1:length(d[, 1]))) {
+    d$mean1[i] <- mean(c(d[i, 1], d[i, 2]))
+})
+
+system.time(d$mean2 <- apply(d, 1, mean))
+
+# system.time(d$mean3 <- row.names(d))
+
+library(parallel)
+numCores <- detectCores()
+cl <- makeCluster(numCores)
+system.time(d$mean3 <- parApply(cl,d,1, mean))
+stopCluster(cl)
+```
+
+## Intro to [ggplot2](https://ggplot2-book.org/index.html)
+
+Basic, use qplot() function (quick plot), designed primarily for interactive use: it makes several assumptions that speed most cases.
+
+```{r, eval=F, echo=T, tidy = T}
+library(ggplot2)
+data("diamonds")
+head(diamonds)
+
+qplot(carat, price, data = diamonds)
+qplot(log(carat),log(price),data = diamonds)
+qplot(carat, x*y*z, data = diamonds)
+
+dsmall <- diamonds[sample(nrow(diamonds),100),]
+qplot(carat, price, data = dsmall, col=color)
+
+# shape = cut;
+# alpha = 1 (transparent)
+# ...
+```
+
+Plot geoms (geometics) geom = point/ smooth/ boxplot/ path/ histogram …
+
+```{r, eval=F, echo=T, tidy = T}
+qplot(color, price, data = dsmall, geom = 'boxplot') + 
+  geom_boxplot(outlier.color = "green",
+               outlier.size = 3,
+               fill = "red",
+               col = "blue")
+```
+
+When designing multi layered plots with different data sources it can get in the way. This section describes what those defaults are, and how they map to the fuller ggplot() syntax.
+
+```{r, eval=F, echo=T, tidy = T}
+qplot(carat, price, data = dsmall, geom = c("point", "smooth"))
+ggplot(dsmall, aes(carat, price)) + geom_point() + geom_smooth()
+```
+
+When the conditions get more complecated, like we want to check the carat and price relationship under different cut, or cut and color…
+
+```{r, eval=F, echo=T, tidy = T}
+gg <- ggplot(diamonds, aes(x=carat, y=price, color=cut)) +
+  geom_point() + labs(title="Scatterplot", x="Carat", y="Price")
+gg + facet_wrap( ~ cut, ncol=3)
+gg + facet_grid(color ~ cut) 
+```
+
+Except for the above built-in functions from ggplot, some other interactive and functional data visualization packages relying on `ggplot` are also developed for different types of figure generation as ggplot's extension, and one can find it [**HERE**](https://exts.ggplot2.tidyverse.org/ggiraph.html), and famous ones like ggraph, ggtree are also popular in biological research.
+
+## Nicely output: [R markdown](https://rmarkdown.rstudio.com/)
+
+The combination of R and markdown, a text enriched conversion tool and it allows one to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid formats (PDF, HTML, MS Word), even presentation slides. R markdown even allows one to write academic manuscripts with a well-organized bibliography. 
+
+**This is a quick reference:**
+
+```
+# inline code
+''r 2*2 `'
+
+
+install.packages("rmarkdown")
+install.packages("rticles")
+Text formatting 
+------------------------------------------------------------
+
+*italic*  or _italic_
+**bold**   __bold__
+`code`
+superscript^2^ and subscript~2~
+
+Headings
+------------------------------------------------------------
+
+# 1st Level Header
+
+## 2nd Level Header
+
+### 3rd Level Header
+
+Lists
+------------------------------------------------------------
+
+*   Bulleted list item 1
+
+*   Item 2
+
+    * Item 2a
+
+    * Item 2b
+
+1.  Numbered list item 1
+
+1.  Item 2. The numbers are incremented automatically in the output.
+
+Links and images
+------------------------------------------------------------
+
+<http://example.com>
+
+[linked phrase](http://example.com)
+
+![optional caption text](path/to/img.png)
+
+Tables 
+------------------------------------------------------------
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+```
+
+**Code chunk options:**
+
+Chunk output can be customized arguments set in the {} of a chunk header. These arguments are most commonly used:
+
+Argument| Default | Effect
+-|-|-
+`eval` |TRUE |Whether to evaluate the code and include its results
+`echo` |TRUE |Whether to display code along with its results
+`warning` |TRUE |Whether to display warnings
+`error` |FALSE |Whether to display errors
+`message` |TRUE |Whether to display messages
+`tidy` |FALSE |Whether to reformat code in a tidy way when displaying it
+`results` |"markup" |"markup", "asis", "hold", or "hide"
+`cache` |FALSE |Whether to cache results for future renders
+`comment` |"##" |Comment character to preface results with
+`fig.width`| 7 |Width in inches for plots created in chunk
+`fig.height`| 7 |Height in inches for plots created in chunk

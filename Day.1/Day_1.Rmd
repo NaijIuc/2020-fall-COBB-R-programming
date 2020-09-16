@@ -9,6 +9,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+**R basic is to let beginners with R has a better idea of how R is working, and also able to finish jobs with built-in or developed packages/functions. After finish this section, one may be able to have a general knowledge that how to look up proper packages/functions, and how to take advantage of them in the solution of computational biological questions.**
 
 ## Running/conducting R
 
@@ -66,7 +67,7 @@ R is an Interpreted language and will give outcomes straight forward after your 
 function(variables, statements, ...)
 ```
 Examples:
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 
 x <- 1:25
 
@@ -84,7 +85,7 @@ plot(x)
 Sometimes, one may confuse about a function, and `?function` will provide details about the function.
 
 Example:
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 ?lm
 ?glm
 ```
@@ -94,7 +95,7 @@ Example:
 * Assign a value to a name with assignment operators. 
 * Make comments with `#` for single-line comment, and `CTRL`+`SHIFT`+`c` for paragraph comment.
 
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 x <- 1:5
 
 9:5 -> y
@@ -125,7 +126,7 @@ When put the same or different elements into a group, they then form objects in 
 
 Some of these structures require that all members be of the same data type (e.g. vectors, matrices, arrays) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.
 
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 #Vector, (if there are different types of data in a vector, then it forcely forms a charactpr vector):
 a <- c(1,2,3); b <- c(1L,"apple",2+5i, logical(2))
 a; b
@@ -140,7 +141,7 @@ m <- matrix(1:6, nrow = 2, ncol = 3); n <- matrix(1:6, nrow = 3, ncol = 2)
 ```
 
 
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 # The created matrixes
 m; n; 
 # Operations:
@@ -160,7 +161,7 @@ list <- list(a,b,c,CO2,m,n)
 list[[1]]
 ```
 Above types/classes can be determined with following functions:
-```{r, eval=F, echo=T}
+```{r, eval=F, echo=T, tidy = T}
 mode() #The (Storage) Mode of an Object
 calss() # the type/class of an object
 is.numeric(x) "test if X is a numeric"
@@ -169,12 +170,12 @@ is.na()
 ### Calculating signs
 
 * Arithmetic operator: 
-```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tidy = T}
 knitr::kable(data.frame('Operator' = c("+","-","*","/","^ or **", "%%", "%/%"),
 'Description' = c("addition","subtraction","multiplication","division","exponentiation","modulus (x mod y) 5%%2 is 1","integer division 5%/%2 is 2")))
 ```
 * Logical operator:  
-```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tidy = T}
 knitr::kable(data.frame('Operator' = c("<","<=", ">",">=","==","!=","!x","|","&","isTRUE(x)"),
 'Description' = c("less than",	"less than or equal to",	"greater than",	"greater than or equal to",	"exactly equal to",	"not equal to",	"Not x",	"x OR y",	"x AND y",	"test if X is TRUE")),
 caption = 'Some of the outcomes are logical (TRUE or FALSE)')
@@ -184,7 +185,7 @@ caption = 'Some of the outcomes are logical (TRUE or FALSE)')
 
 R can read files from local files, online files, and memory, with variant types. With the help of some packages, R can access the Excel file as well. E.g.
 
-```{r, , eval=F, echo=T}
+```{r, , eval=F, echo=T, tidy = T}
 t1 <- read.table("data/covid-19.tsv")
 t2 <- read.table('https://raw.githubusercontent.com/jmzeng1314/my-R/master/DEG_scripts/tair/DESeq2_DEG.Day1-Day0.txt')
 t3 <-  readClipboard()
@@ -198,7 +199,7 @@ t5 <- fread("data/LUAD_phenotype")
 
 Enter data using a spreadsheet
 
-```{r, , eval=F, echo=T}
+```{r, , eval=F, echo=T, tidy = T}
 edit(t2)
 fix(t2)
 ```
@@ -206,7 +207,7 @@ fix(t2)
 Operations on data frame, like merge, subset, isolate …(demo)
 
 Write files:
-```{r, , eval=F, echo=T}
+```{r, , eval=F, echo=T, tidy = T}
 sink("file.txt")
 writeLines()
 write.csv()
@@ -215,7 +216,7 @@ write.table()
 
 Save writes an external representation of R objects to the specified file. The objects can be read back from the file at a later date.
 
-```{r, , eval=F, echo=T}
+```{r, , eval=F, echo=T, tidy = T}
 save.image(file = ".RData", version = NULL,...)
 ```
 The saved files can be read by using function [load](https://stat.ethz.ch/R-manual/R-devel/library/base/html/load.html) or [attach](https://stat.ethz.ch/R-manual/R-devel/library/base/html/attach.html) (or [data](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/data.html) in some cases).
@@ -224,7 +225,7 @@ The saved files can be read by using function [load](https://stat.ethz.ch/R-manu
 
 R is famous for its graphing imaging ability (Please try `demo(graphics)` to check its gallery). Besides the popular package, `ggplot`, R has plenty of graph functions and corresponding associating functions to generate beautiful images.
 
-```{r, , eval=F, echo=T}
+```{r, , eval=F, echo=T, tidy = T}
 plot(x = t2$log2FoldChange, y = t2$padj)
 abline(h = 0.05, col = "red", lty = 2)
 
@@ -256,7 +257,7 @@ dotchart(t2$baseMean[1:10], labels = rownames(t2)[1:10])
 
 Save images, Export is able to help save the plot for sure, but if you want high-quality figures, by using:
 
-```{r, , eval=F, echo=T}
+```{r, , eval=F, echo=T, tidy = T}
 jpeg/png/pdf/tiff('rplot.jpg/png/pdf/tif', width = 8, height = 8, unit="in", res=300)
 plot(x,y)
 dev.off()
