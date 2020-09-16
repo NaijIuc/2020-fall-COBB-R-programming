@@ -4,7 +4,7 @@ This is a two-day tutorial introducing R programming in computational biology. E
 
 Besides, most of well developed R packages provide very detailed documentation or manuals assisting your coding. For instance, the manual of [ChemmineR](https://www.bioconductor.org/packages/devel/bioc/vignettes/ChemmineR/inst/doc/ChemmineR.html) is in HTML format and the user's guide of [edgeR](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf) is in a well formatted PDF file. All of the files can be accessed online, and provide more than enough explanations and examples to help one to understand relevant operations. Therefore, just with basic R programming knowledge, according to these guides, one can smoothly go through complex analysis. This is the task of this two-day course that helps one who does not know R can grasp the essential operation of R and one who knows R can master R more efficiently.
 
-Tips: In the HTML files, there are some inline hyperlinks provide more detailed explanations and examples about specific terms; some homework is demonstrated with R and you can check from [here](https://cuij.netlify.app/)
+***Tips***: In the HTML files, there are some inline hyperlinks provide more detailed explanations and examples about specific terms; some homework is demonstrated with R and you can check from [here](https://cuij.netlify.app/)
 
 ## Requirements
 
