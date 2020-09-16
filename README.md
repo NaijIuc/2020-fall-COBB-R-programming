@@ -22,4 +22,7 @@ Day 1. R basics
 
 Day 2. Advanced R
 
-* Writing functions 
+* Writing functions and loops
+* Simple intro about `apply()` function
+* Simple intro about `ggplot2`
+* R markdown
