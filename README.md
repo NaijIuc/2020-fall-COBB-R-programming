@@ -14,7 +14,7 @@ Besides, most of well developed R packages provide very detailed documentation o
 
 ## Tasks
 
-Day 1. R basics
+September 22. R basics
 
 * R background
 * Data type/class
@@ -22,7 +22,7 @@ Day 1. R basics
 * Use of functions
 * Basic graphing
 
-Day 2. Advanced R
+September 24. Advanced R
 
 * Writing functions and loops
 * Simple intro about `apply()` function
