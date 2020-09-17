@@ -11,7 +11,7 @@
 
 
 
-<title>Day 1 tutorial: Advanced R</title>
+<title>Day 1 tutorial: R Basics</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1756,335 +1756,313 @@ summary {
 
 
 
-<h1 class="title toc-ignore">Day 1 tutorial: Advanced R</h1>
+<h1 class="title toc-ignore">Day 1 tutorial: R Basics</h1>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#functions-and-loops">Functions and loops</a>
+<li><a href="#runningconducting-r">Running/conducting R</a></li>
+<li><a href="#r-package">R package</a></li>
+<li><a href="#functions-and-objects">Functions and objects</a>
 <ul>
-<li><a href="#functions">Functions</a></li>
-<li><a href="#loops">Loops</a></li>
+<li><a href="#assignment-and-comment">Assignment and comment</a></li>
+<li><a href="#data-type-and-class">Data type and class</a></li>
+<li><a href="#calculating-signs">Calculating signs</a></li>
 </ul></li>
-<li><a href="#apply-family"><span><code>Apply</code></span> family</a></li>
-<li><a href="#intro-to-ggplot2">Intro to <span>ggplot2</span></a></li>
-<li><a href="#nicely-output-r-markdown">Nicely output: <span>R markdown</span></a></li>
+<li><a href="#data-read-in-and-output">Data read-in and output</a></li>
+<li><a href="#simple-graphs-with-r">Simple Graphs with R</a></li>
 </ul>
 </div>
 
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-text-begin -->
-<p><strong>The aim of the advanced R tutorial is to show one how to develop one’s own tools when there is no packages/functions developed focus on a specific question. Therefore, one may need to write a function to associate with the data; generate fancy plots for publications, and generate a nicely readable report for a variety of purpose.</strong></p>
-<div id="functions-and-loops" class="section level2">
-<h2>Functions and loops</h2>
-<div id="functions" class="section level3">
-<h3>Functions</h3>
-<p>Why write functions?</p>
+<p><strong>R basic is to let beginners with R has a better idea of how R is working, and also able to finish jobs with built-in or developed packages/functions. After finish this section, one may be able to have a general knowledge that how to look up proper packages/functions, and how to take advantage of them in the solution of computational biological questions.</strong></p>
+<div id="runningconducting-r" class="section level2">
+<h2>Running/conducting R</h2>
 <ul>
-<li>Repetitive processes</li>
-<li>Nothing may exist for our purpose</li>
-<li>Customizing existing function
+<li>Using the R console, in your terminal or Command Prompt type <code>r</code> or <code>R</code>, and one can code in the R environment. In this way, you can used <code>Rscript</code> to run your script.</li>
+</ul>
+<pre><code>R version 4.0.2 (2020-06-22) -- &quot;Taking Off Again&quot;
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+...
+
+&gt;</code></pre>
 <ul>
-<li>We may need to tweak the output of a function</li>
-<li>We may only need part of a larger function</li>
-<li>We can customize for increased speed</li>
-</ul></li>
+<li>Graphic User Interfaces (GUI), there are many options including RGUI, RStudio, Jupyter etc.. RStudio is a comprehensive and functional choice. In the RStudio, one can run code line by line or the selected code with <code>CTRL</code>+<code>ENTER</code> key.</li>
+</ul>
+</div>
+<div id="r-package" class="section level2">
+<h2>R package</h2>
+<p>Packages are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data. R packages are the function extensions of R. Usually a package would provide the specific introduction to help install it, and principally there are 3 ways to install R packages.</p>
+<ul>
+<li><p>Install packages</p></li>
+<li><p>From CRAN</p></li>
+</ul>
+<pre><code>install.pacakge(&quot;Package&quot;)</code></pre>
+<ul>
+<li>From bioconductor</li>
+</ul>
+<pre><code># The first command only needs to be run once
+
+install.packages(&quot;BiocManager&quot;) 
+BiocManager::install(&quot;Package&quot;)</code></pre>
+<ul>
+<li>From github</li>
+</ul>
+<pre><code># The first command only needs to be run once
+
+install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;NaijIuc/TargetByLasso&quot;)</code></pre>
+<ul>
+<li>Loading packages</li>
+</ul>
+<p>No matter where the packages installed from, one can load the desired package with the <code>library</code> command to load the specific package.</p>
+<pre><code>library(&quot;Package.1&quot;)
+library(&quot;Package.2&quot;)
+...</code></pre>
+</div>
+<div id="functions-and-objects" class="section level2">
+<h2>Functions and objects</h2>
+<p>R is an Interpreted language and will give outcomes straight forward after your input with most functions. R has a lot of <a href="https://cran.r-project.org/doc/contrib/Short-refcard.pdf">built-in functions</a> in assisting one’s work. Below is the general format of function usage.</p>
+<pre><code>function(variables, statements, ...)</code></pre>
+<p>Examples:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbInggPC0gMToyNSIsIiIsInN1bSh4KSIsIiIsIm1lYW4oeCkiLCIiLCJtYXRyaXgoeCwgbmNvbCA9IDUsIGJ5cm93ID0gVCkiLCIiLCJwYXN0ZShcIk5vXCIsIHgsIHNlcCA9IFwiLlwiKSIsIiIsInBsb3QoeCkiXX0= -->
+<pre class="r"><code>x &lt;- 1:25
+
+sum(x)
+
+mean(x)
+
+matrix(x, ncol = 5, byrow = T)
+
+paste(&quot;No&quot;, x, sep = &quot;.&quot;)
+
+plot(x)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Sometimes, one may confuse about a function, and <code>?function</code> will provide details about the function.</p>
+<p>Example:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImA/YChsbSkiLCJgP2AoZ2xtKSJdfQ== -->
+<pre class="r"><code>`?`(lm)
+`?`(glm)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="assignment-and-comment" class="section level3">
+<h3>Assignment and comment</h3>
+<ul>
+<li>Assign a value to a name with assignment operators.</li>
+<li>Make comments with <code>#</code> for single-line comment, and <code>CTRL</code>+<code>SHIFT</code>+<code>c</code> for paragraph comment.</li>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbIiMgQ29tbW9uIGZ1bmN0aW9ucyBzdHJ1Y3R1cmU6IiwibXlmdW5jdGlvbiA8LSBmdW5jdGlvbihhcmcxLCBhcmcyLCAuLi4pIHtcbiAgICBzdGF0ZW1lbnRzXG4gICAgcmV0dXJuKG9iamVjdClcbn0iLCIiLCIjIEV4YW1wbGU6IiwibXlmdW5jdCA8LSBmdW5jdGlvbih4KSB7XG4gICAgeSA9IHheMyArIHheMiArIHggKyAxXG59IiwieCA8LSBzZXEoLTEwLCAxMCwgMC41KSIsInkgPC0gbXlmdW5jdCh4KSIsIiIsIiMgcGxvdCh4LHksIHR5cGUgPSAnbCcpIl19 -->
-<pre class="r"><code># Common functions structure:
-myfunction &lt;- function(arg1, arg2, ...) {
-    statements
-    return(object)
-}
+<!-- rnb-source-begin eyJkYXRhIjpbInggPC0gMTo1IiwiIiwieSA8LSA5OjUiLCIiLCJaID0geCArIHkiLCIiLCJhIDwtIGIgPC0gYyA8LSA2Il19 -->
+<pre class="r"><code>x &lt;- 1:5
 
-# Example:
-myfunct &lt;- function(x) {
-    y = x^3 + x^2 + x + 1
-}
-x &lt;- seq(-10, 10, 0.5)
-y &lt;- myfunct(x)
+y &lt;- 9:5
 
-# plot(x,y, type = &#39;l&#39;)</code></pre>
+Z = x + y
+
+a &lt;- b &lt;- c &lt;- 6</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="loops" class="section level3">
-<h3>Loops</h3>
-<p>This section will discuss three loops: <code>for</code>, <code>while</code>, and <code>repeat</code> with the additional clauses <code>break</code> and <code>next</code>.</p>
-<p>The <code>for</code> loop constructs implies that the number of iterations is fixed and known in advance;</p>
-<p>The <code>while</code> loop, set in the middle of the figure above, is made of an initialization block as before, followed by a logical condition;</p>
-<p>The <code>repeat</code> loop is similar to the while loop, but it is made so that the blocks of instructions i1 and i2 are executed at least once, no matter what the result of the condition;</p>
-<p><code>break</code> executes and the innermost loop is interrupted with a direct jump to the instruction following the inner loop;</p>
-<p><code>next</code> discontinues a particular iteration and jumps to the next cycle</p>
+<div id="data-type-and-class" class="section level3">
+<h3>Data type and class</h3>
+<p>Objects are composed of various elements, and each element has its type</p>
+<ul>
+<li><em>Numeric</em>: 0, -1, 3.14
+<ul>
+<li><em>Integer</em>: 2L (the “L” tells R to store this as an integer)</li>
+</ul></li>
+<li><em>Character</em>: “R”, “pitt”</li>
+<li><em>Logical</em>: TRUE (T); FALSE (F)</li>
+<li><em>complex</em>: 1+4i (complex numbers with real and imaginary parts)</li>
+</ul>
+<p>When put the same or different elements into a group, they then form objects in different structures</p>
+<ul>
+<li><em>Vector</em>, the most common and basic data structure in R;</li>
+<li><em>Factors</em>, variables take on a limited number of different values, often referred to as categorical variables;</li>
+<li><em>Data frame</em>, a very important data type in R for most tabular data;</li>
+<li><em>matrix</em>, matrices are an extension of the numeric or character vectors;
+<ul>
+<li><em>Array</em>, higher dimensional data, the dimension of vector is 1; of matrix is 2; and of array is n(n ≥ 3);</li>
+</ul></li>
+<li><em>list</em>, a container.</li>
+</ul>
+<p>Some of these structures require that all members be of the same data type (e.g. vectors, matrices, arrays) while others permit multiple data types (e.g. lists, data frames). To check the types or structures of data, “class()” can be employed.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbIiMgU3RydWN0dXJlIG9mIGZvciBsb29wOiIsImZvciAodmFsIGluIHNlcXVlbmNlKSB7XG4gICAgc3RhdGVtZW50XG59IiwiIiwiIyBFeGFtcGxlIDEgb2YgZm9yIGxvb3A6IiwiZm9yIChpIGluIDE6NSkge1xuICAgIHByaW50KGkpXG59IiwiIyBFeGFtcGxlIDIgb2YgZm9yIGxvb3A6IiwibSA9IDIwIiwiZm9yIChrIGluIDE6bSkge1xuICAgIGlmICghayUlMikgXG4gICAgICAgIG5leHRcbiAgICBwcmludChrKVxufSIsIi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSIsIiMgU3RydWN0dXJlIG9mIHdoaWxlIGxvb3A6Iiwid2hpbGUgKHRlc3RfZXhwcmVzc2lvbikge1xuICAgIHN0YXRlbWVudFxufSIsIiIsIiMgRXhhbXBsZSBvZiB3aGlsZSBsb29wOiIsInYgPC0gYyhcIkhleSwgd2hpbGUgbG9vcFwiKSIsImNudCA8LSAyIiwid2hpbGUgKGNudCA8IDcpIHtcbiAgICBjYXQoY250LCBcIiBcIiwgdiwgXCJcXG5cIilcbiAgICBjbnQgPSBjbnQgKyAxXG59IiwiLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIiwiIyBTdHJ1Y3R1cmUgb2YgcmVwZWF0IGxvb3A6IiwicmVwZWF0IHtcbiAgICBjb21tYW5kc1xuICAgIGlmIChjb25kaXRpb24pIHtcbiAgICAgICAgYnJlYWtcbiAgICB9XG59IiwiIiwiIyBFeGFtcGxlIG9mIHJlcGVhdCBsb29wIiwidiA8LSBjKFwiSGV5LCByZXBlYXQgbG9vcFwiKSIsImNudCA8LSAyIiwicmVwZWF0IHtcbiAgICBjYXQoY250LCBcIiBcIiwgdiwgXCJcXG5cIilcbiAgICBjbnQgPC0gY250ICsgMVxuICAgIGlmIChjbnQgPiA1KSB7XG4gICAgICAgIGJyZWFrXG4gICAgfVxufSJdfQ== -->
-<pre class="r"><code># Structure of for loop:
-for (val in sequence) {
-    statement
-}
+<!-- rnb-source-begin eyJkYXRhIjpbIiMgVmVjdG9yLCAoaWYgdGhlcmUgYXJlIGRpZmZlcmVudCB0eXBlcyBvZiBkYXRhIGluIGEgdmVjdG9yLCB0aGVuIGl0IGZvcmNlbHkgZm9ybXMgYSBjaGFyYWN0cHIgdmVjdG9yKToiLCJhIDwtIGMoMSwgMiwgMykiLCJiIDwtIGMoMUwsIFwiYXBwbGVcIiwgMiArICgwKzVpKSwgbG9naWNhbCgyKSkiLCJhIiwiYiIsIiIsIiMgRmFjdG9yLCAoZmFjdG9yIGNsYXNzIGhlbHBzIHNpbXBseSBjbGFzc2lmeSB5b3VyIGRhdGEpOiIsImMgPC0gZmFjdG9yKGMoMTo1LCAxLCAzLCA1KSkiLCJjIiwiY1tsZXZlbHMoYykgPT0gXCIxXCJdIiwiIiwiIyBNYXRyaXggKHRoZXJlIGJ1aWx0LWluIGZ1bmN0aW9ucyBoZWxwIHRvIGNvbmR1Y3QgbWF0cml4IG9wZXJhdGlvbnMpOiIsIm0gPC0gbWF0cml4KDE6NiwgbnJvdyA9IDIsIG5jb2wgPSAzKSIsIm4gPC0gbWF0cml4KDE6NiwgbnJvdyA9IDMsIG5jb2wgPSAyKSJdfQ== -->
+<pre class="r"><code># Vector, (if there are different types of data in a vector, then it forcely forms a charactpr vector):
+a &lt;- c(1, 2, 3)
+b &lt;- c(1L, &quot;apple&quot;, 2 + (0+5i), logical(2))
+a
+b
 
-# Example 1 of for loop:
-for (i in 1:5) {
-    print(i)
-}
-# Example 2 of for loop:
-m = 20
-for (k in 1:m) {
-    if (!k%%2) 
-        next
-    print(k)
-}
----------------------------------------------
-# Structure of while loop:
-while (test_expression) {
-    statement
-}
+# Factor, (factor class helps simply classify your data):
+c &lt;- factor(c(1:5, 1, 3, 5))
+c
+c[levels(c) == &quot;1&quot;]
 
-# Example of while loop:
-v &lt;- c(&quot;Hey, while loop&quot;)
-cnt &lt;- 2
-while (cnt &lt; 7) {
-    cat(cnt, &quot; &quot;, v, &quot;\n&quot;)
-    cnt = cnt + 1
-}
----------------------------------------------
-# Structure of repeat loop:
-repeat {
-    commands
-    if (condition) {
-        break
-    }
-}
+# Matrix (there built-in functions help to conduct matrix operations):
+m &lt;- matrix(1:6, nrow = 2, ncol = 3)
+n &lt;- matrix(1:6, nrow = 3, ncol = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbIiMgVGhlIGNyZWF0ZWQgbWF0cml4ZXMiLCJtIiwibiIsIiMgT3BlcmF0aW9uczoiLCJtICUqJSBuIiwibiAlKiUgbSIsIiIsIiMgQXJyYXk6IiwidjEgPC0gMTozIiwidjIgPC0gODoxNCIsImFycmF5KGModjEsIHYyKSwgZGltID0gYygyLCAzLCAzKSkgICMgcm93LCBjb2x1bW4sIGRpbWVuc2lvbiIsIiIsIiMgRGF0YSBmcmFtZSAoQSBidWlsdC1pbiBkYXRhc2V0IGZyb20gUiBpcyBpbmNsdWRlZCwgdXNpbmcgZGF0YSgpIHRvIGNoZWNrIGFsbCBidWlsdC1pbiBkYXRhc2V0KToiLCJkZi5jbzIgPC0gaGVhZChDTzIpIiwiZGltKENPMikiLCIiLCIjIExpc3Q6IiwibGlzdCA8LSBsaXN0KGEsIGIsIGMsIENPMiwgbSwgbikiLCJsaXN0W1sxXV0iXX0= -->
+<pre class="r"><code># The created matrixes
+m
+n
+# Operations:
+m %*% n
+n %*% m
 
-# Example of repeat loop
-v &lt;- c(&quot;Hey, repeat loop&quot;)
-cnt &lt;- 2
-repeat {
-    cat(cnt, &quot; &quot;, v, &quot;\n&quot;)
-    cnt &lt;- cnt + 1
-    if (cnt &gt; 5) {
-        break
-    }
-}</code></pre>
+# Array:
+v1 &lt;- 1:3
+v2 &lt;- 8:14
+array(c(v1, v2), dim = c(2, 3, 3))  # row, column, dimension
+
+# Data frame (A built-in dataset from R is included, using data() to check all built-in dataset):
+df.co2 &lt;- head(CO2)
+dim(CO2)
+
+# List:
+list &lt;- list(a, b, c, CO2, m, n)
+list[[1]]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Above types/classes can be determined with following functions:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbIm1vZGUoKSAgI1RoZSAoU3RvcmFnZSkgTW9kZSBvZiBhbiBPYmplY3QiLCJjYWxzcygpICAjIHRoZSB0eXBlL2NsYXNzIG9mIGFuIG9iamVjdCIsImlzLm51bWVyaWMoeCkgICMgJ3Rlc3QgaWYgWCBpcyBhIG51bWVyaWMnIiwiaXMubmEoKSJdfQ== -->
+<pre class="r"><code>mode()  #The (Storage) Mode of an Object
+calss()  # the type/class of an object
+is.numeric(x)  # &#39;test if X is a numeric&#39;
+is.na()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-</div>
-<div id="apply-family" class="section level2">
-<h2><a href="https://www.datacamp.com/community/tutorials/r-tutorial-apply-family"><code>Apply</code></a> family</h2>
-<p>To make a <code>for</code> loop more efficient, <code>apply()</code> function is introduced in R. The <code>apply()</code> family pertains to the R base package and is populated with functions to manipulate slices of data from matrices, arrays, lists, and data frames in a repetitive way. These functions allow crossing the data in a number of ways and avoid explicit use of loop constructs. They act on an input list, matrix, or array and apply a named function with one or several optional arguments. The apply functions (<code>apply</code>, <code>sapply</code>, <code>lapply</code> etc.) are marginally faster than a regular for loop.</p>
+<div id="calculating-signs" class="section level3">
+<h3>Calculating signs</h3>
+<ul>
+<li>Arithmetic operator:</li>
+</ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbIk4gPC0gMTAwMDAiLCJ4MSA8LSBydW5pZihOKSIsIngyIDwtIHJ1bmlmKE4pIiwiZCA8LSBhcy5kYXRhLmZyYW1lKGNiaW5kKHgxLCB4MikpIiwiIiwic3lzdGVtLnRpbWUoZm9yIChpIGluIGMoMTpsZW5ndGgoZFssIDFdKSkpIHtcbiAgICBkJG1lYW4xW2ldIDwtIG1lYW4oYyhkW2ksIDFdLCBkW2ksIDJdKSlcbn0pIiwiIiwic3lzdGVtLnRpbWUoZCRtZWFuMiA8LSBhcHBseShkLCAxLCBtZWFuKSkiLCIiLCIjIHN5c3RlbS50aW1lKGQkbWVhbjMgPC0gcm93Lm5hbWVzKGQpKSIsIiIsImxpYnJhcnkocGFyYWxsZWwpIiwibnVtQ29yZXMgPC0gZGV0ZWN0Q29yZXMoKSIsImNsIDwtIG1ha2VDbHVzdGVyKG51bUNvcmVzKSIsInN5c3RlbS50aW1lKGQkbWVhbjMgPC0gcGFyQXBwbHkoY2wsIGQsIDEsIG1lYW4pKSIsInN0b3BDbHVzdGVyKGNsKSJdfQ== -->
-<pre class="r"><code>N &lt;- 10000
-x1 &lt;- runif(N)
-x2 &lt;- runif(N)
-d &lt;- as.data.frame(cbind(x1, x2))
-
-system.time(for (i in c(1:length(d[, 1]))) {
-    d$mean1[i] &lt;- mean(c(d[i, 1], d[i, 2]))
-})
-
-system.time(d$mean2 &lt;- apply(d, 1, mean))
-
-# system.time(d$mean3 &lt;- row.names(d))
-
-library(parallel)
-numCores &lt;- detectCores()
-cl &lt;- makeCluster(numCores)
-system.time(d$mean3 &lt;- parApply(cl, d, 1, mean))
-stopCluster(cl)</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Logical operator:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="intro-to-ggplot2" class="section level2">
-<h2>Intro to <a href="https://ggplot2-book.org/index.html">ggplot2</a></h2>
-<p>Basic, use qplot() function (quick plot), designed primarily for interactive use: it makes several assumptions that speed most cases.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkoZ2dwbG90MikiLCJkYXRhKFwiZGlhbW9uZHNcIikiLCJoZWFkKGRpYW1vbmRzKSIsIiIsInFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRpYW1vbmRzKSIsInFwbG90KGxvZyhjYXJhdCksIGxvZyhwcmljZSksIGRhdGEgPSBkaWFtb25kcykiLCJxcGxvdChjYXJhdCwgeCAqIHkgKiB6LCBkYXRhID0gZGlhbW9uZHMpIiwiIiwiZHNtYWxsIDwtIGRpYW1vbmRzW3NhbXBsZShucm93KGRpYW1vbmRzKSwgMTAwKSwgXSIsInFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRzbWFsbCwgY29sID0gY29sb3IpIiwiIiwiIyBzaGFwZSA9IGN1dDsgYWxwaGEgPSAxICh0cmFuc3BhcmVudCkgLi4uIl19 -->
-<pre class="r"><code>library(ggplot2)
-data(&quot;diamonds&quot;)
-head(diamonds)
-
-qplot(carat, price, data = diamonds)
-qplot(log(carat), log(price), data = diamonds)
-qplot(carat, x * y * z, data = diamonds)
-
-dsmall &lt;- diamonds[sample(nrow(diamonds), 100), ]
-qplot(carat, price, data = dsmall, col = color)
-
-# shape = cut; alpha = 1 (transparent) ...</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Plot geoms (geometics) geom = point/ smooth/ boxplot/ path/ histogram …</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoicXBsb3QoY29sb3IsIHByaWNlLCBkYXRhID0gZHNtYWxsLCBnZW9tID0gXCJib3hwbG90XCIpICsgZ2VvbV9ib3hwbG90KG91dGxpZXIuY29sb3IgPSBcImdyZWVuXCIsIG91dGxpZXIuc2l6ZSA9IDMsIGZpbGwgPSBcInJlZFwiLCBjb2wgPSBcImJsdWVcIikifQ== -->
-<pre class="r"><code>qplot(color, price, data = dsmall, geom = &quot;boxplot&quot;) + geom_boxplot(outlier.color = &quot;green&quot;, outlier.size = 3, fill = &quot;red&quot;, col = &quot;blue&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>When designing multi layered plots with different data sources it can get in the way. This section describes what those defaults are, and how they map to the fuller ggplot() syntax.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbInFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRzbWFsbCwgZ2VvbSA9IGMoXCJwb2ludFwiLCBcInNtb290aFwiKSkiLCJnZ3Bsb3QoZHNtYWxsLCBhZXMoY2FyYXQsIHByaWNlKSkgKyBnZW9tX3BvaW50KCkgKyBnZW9tX3Ntb290aCgpIl19 -->
-<pre class="r"><code>qplot(carat, price, data = dsmall, geom = c(&quot;point&quot;, &quot;smooth&quot;))
-ggplot(dsmall, aes(carat, price)) + geom_point() + geom_smooth()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>When the conditions get more complecated, like we want to check the carat and price relationship under different cut, or cut and color…</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjpbImdnIDwtIGdncGxvdChkaWFtb25kcywgYWVzKHggPSBjYXJhdCwgeSA9IHByaWNlLCBjb2xvciA9IGN1dCkpICsgZ2VvbV9wb2ludCgpICsgbGFicyh0aXRsZSA9IFwiU2NhdHRlcnBsb3RcIiwgeCA9IFwiQ2FyYXRcIiwgeSA9IFwiUHJpY2VcIikiLCJnZyArIGZhY2V0X3dyYXAofmN1dCwgbmNvbCA9IDMpIiwiZ2cgKyBmYWNldF9ncmlkKGNvbG9yIH4gY3V0KSJdfQ== -->
-<pre class="r"><code>gg &lt;- ggplot(diamonds, aes(x = carat, y = price, color = cut)) + geom_point() + labs(title = &quot;Scatterplot&quot;, x = &quot;Carat&quot;, y = &quot;Price&quot;)
-gg + facet_wrap(~cut, ncol = 3)
-gg + facet_grid(color ~ cut)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Except for the above built-in functions from ggplot, some other interactive and functional data visualization packages relying on <code>ggplot</code> are also developed for different types of figure generation as ggplot’s extension, and one can find it <a href="https://exts.ggplot2.tidyverse.org/ggiraph.html"><strong>HERE</strong></a>, and famous ones like ggraph, ggtree are also popular in biological research.</p>
 </div>
-<div id="nicely-output-r-markdown" class="section level2">
-<h2>Nicely output: <a href="https://rmarkdown.rstudio.com/">R markdown</a></h2>
-<p>The combination of R and markdown, a text enriched conversion tool and it allows one to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid formats (PDF, HTML, MS Word), even presentation slides. R markdown even allows one to write academic manuscripts with a well-organized bibliography.</p>
-<p><strong>This is a quick reference:</strong></p>
-<pre><code># inline code
-&#39;&#39;r 2*2 `&#39;
-
-
-install.packages(&quot;rmarkdown&quot;)
-install.packages(&quot;rticles&quot;)
-Text formatting 
-------------------------------------------------------------
-
-*italic*  or _italic_
-**bold**   __bold__
-`code`
-superscript^2^ and subscript~2~
-
-Headings
-------------------------------------------------------------
-
-# 1st Level Header
-
-## 2nd Level Header
-
-### 3rd Level Header
-
-Lists
-------------------------------------------------------------
-
-*   Bulleted list item 1
-
-*   Item 2
-
-    * Item 2a
-
-    * Item 2b
-
-1.  Numbered list item 1
-
-1.  Item 2. The numbers are incremented automatically in the output.
-
-Links and images
-------------------------------------------------------------
-
-&lt;http://example.com&gt;
-
-[linked phrase](http://example.com)
-
-![optional caption text](path/to/img.png)
-
-Tables 
-------------------------------------------------------------
-
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell</code></pre>
-<p><strong>Code chunk options:</strong></p>
-<p>Chunk output can be customized arguments set in the {} of a chunk header. These arguments are most commonly used:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Argument</th>
-<th>Default</th>
-<th>Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>eval</code></td>
-<td>TRUE</td>
-<td>Whether to evaluate the code and include its results</td>
-</tr>
-<tr class="even">
-<td><code>echo</code></td>
-<td>TRUE</td>
-<td>Whether to display code along with its results</td>
-</tr>
-<tr class="odd">
-<td><code>warning</code></td>
-<td>TRUE</td>
-<td>Whether to display warnings</td>
-</tr>
-<tr class="even">
-<td><code>error</code></td>
-<td>FALSE</td>
-<td>Whether to display errors</td>
-</tr>
-<tr class="odd">
-<td><code>message</code></td>
-<td>TRUE</td>
-<td>Whether to display messages</td>
-</tr>
-<tr class="even">
-<td><code>tidy</code></td>
-<td>FALSE</td>
-<td>Whether to reformat code in a tidy way when displaying it</td>
-</tr>
-<tr class="odd">
-<td><code>results</code></td>
-<td>“markup”</td>
-<td>“markup”, “asis”, “hold”, or “hide”</td>
-</tr>
-<tr class="even">
-<td><code>cache</code></td>
-<td>FALSE</td>
-<td>Whether to cache results for future renders</td>
-</tr>
-<tr class="odd">
-<td><code>comment</code></td>
-<td>“##”</td>
-<td>Comment character to preface results with</td>
-</tr>
-<tr class="even">
-<td><code>fig.width</code></td>
-<td>7</td>
-<td>Width in inches for plots created in chunk</td>
-</tr>
-<tr class="odd">
-<td><code>fig.height</code></td>
-<td>7</td>
-<td>Height in inches for plots created in chunk</td>
-</tr>
-</tbody>
-</table>
+<div id="data-read-in-and-output" class="section level2">
+<h2>Data read-in and output</h2>
+<p>R can read files from local files, online files, and memory, with variant types. With the help of some packages, R can access the Excel file as well. E.g.</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbInQxIDwtIHJlYWQudGFibGUoXCJkYXRhL2NvdmlkLTE5LnRzdlwiKSIsInQyIDwtIHJlYWRMaW5lcyhcImh0dHBzOi8vZnRwLm5jYmkubmxtLm5paC5nb3YvZ2VvL3Nlcmllcy9HU0Uybm5uL0dTRTI1ODMvc3VwcGwvR1NFMjU4M19jb3JyZWN0bHlfb3JkZXJlZF9LbGV2ZWN6X0dFT190aW1lX3Nlcmllc19kYXRhLnR4dFwiKSIsInQzIDwtIHJlYWRDbGlwYm9hcmQoKSIsIiIsImxpYnJhcnkoXCJyZWFkeGxcIikiLCJ0NCA8LSByZWFkX2V4Y2VsKFwiZGF0YS9HT18zY2VsbC54bHNcIikiLCIiLCJsaWJyYXJ5KGRhdGEudGFibGUpIiwidDUgPC0gZnJlYWQoXCJkYXRhL0xVQURfcGhlbm90eXBlXCIpIl19 -->
+<pre class="r"><code>t1 &lt;- read.table(&quot;data/covid-19.tsv&quot;)
+t2 &lt;- readLines(&quot;https://ftp.ncbi.nlm.nih.gov/geo/series/GSE2nnn/GSE2583/suppl/GSE2583_correctly_ordered_Klevecz_GEO_time_series_data.txt&quot;)
+t3 &lt;- readClipboard()
+
+library(&quot;readxl&quot;)
+t4 &lt;- read_excel(&quot;data/GO_3cell.xls&quot;)
+
+library(data.table)
+t5 &lt;- fread(&quot;data/LUAD_phenotype&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Enter data using a spreadsheet</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImVkaXQodDIpIiwiZml4KHQyKSJdfQ== -->
+<pre class="r"><code>edit(t2)
+fix(t2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Operations on data frame, like merge, subset, isolate …(demo)</p>
+<p>Write files:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbInNpbmsoXCJmaWxlLnR4dFwiKSIsIndyaXRlTGluZXMoKSIsIndyaXRlLmNzdigpIiwid3JpdGUudGFibGUoKSJdfQ== -->
+<pre class="r"><code>sink(&quot;file.txt&quot;)
+writeLines()
+write.csv()
+write.table()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Save writes an external representation of R objects to the specified file. The objects can be read back from the file at a later date.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoic2F2ZS5pbWFnZShmaWxlID0gXCIuUkRhdGFcIiwgdmVyc2lvbiA9IE5VTEwsIC4uLikifQ== -->
+<pre class="r"><code>save.image(file = &quot;.RData&quot;, version = NULL, ...)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The saved files can be read by using function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/load.html">load</a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/attach.html">attach</a> (or <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/data.html">data</a> in some cases).</p>
+</div>
+<div id="simple-graphs-with-r" class="section level2">
+<h2>Simple Graphs with R</h2>
+<p>R is famous for its graphing imaging ability (Please try <code>demo(graphics)</code> to check its gallery). Besides the popular package, <code>ggplot</code>, R has plenty of graph functions and corresponding associating functions to generate beautiful images.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImRhdGEoXCJjYXJzXCIpIiwiIiwicGxvdCh4ID0gY2FycyRzcGVlZCwgeSA9IGNhcnMkZGlzdCkiLCIiLCIiLCIjIHN1YnBhbmVsIG9wdGlvbiAxIiwicGFyKG1mcm93ID0gYygzLCAyKSkgICMgcm93IGNvbCIsIiIsIiMgc3VicGFuZWwgb3B0aW9uIDIiLCJsYXlvdXQobWF0cml4KGMoMSwgMSwgMSwgMiwgMywgNCwgMiwgMywgNSksIG5yID0gMywgYnlyb3cgPSBUKSkiLCIiLCIiLCJwbG90KGNhcnMkc3BlZWQpIiwiYmFycGxvdChjYXJzJHNwZWVkKSIsImhpc3QoY2FycyRkaXN0KSIsInBpZShjYXJzJHNwZWVkKSIsImJveHBsb3QoY2FycyRkaXN0KSIsImRvdGNoYXJ0KGNhcnMkc3BlZWQpIl19 -->
+<pre class="r"><code>data(&quot;cars&quot;)
+
+plot(x = cars$speed, y = cars$dist)
+
+
+# subpanel option 1
+par(mfrow = c(3, 2))  # row col
+
+# subpanel option 2
+layout(matrix(c(1, 1, 1, 2, 3, 4, 2, 3, 5), nr = 3, byrow = T))
+
+
+plot(cars$speed)
+barplot(cars$speed)
+hist(cars$dist)
+pie(cars$speed)
+boxplot(cars$dist)
+dotchart(cars$speed)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Save images, Export is able to help save the plot for sure, but if you want high-quality figures, by using:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImpwZWcvcG5nL3BkZi90aWZmKFwicnBsb3QuanBnL3BuZy9wZGYvdGlmXCIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gOCwgdW5pdCA9IFwiaW5cIiwgcmVzID0gMzAwKSIsInBsb3QoeCwgeSkiLCJkZXYub2ZmKCkiXX0= -->
+<pre class="r"><code>jpeg/png/pdf/tiff(&quot;rplot.jpg/png/pdf/tif&quot;, width = 8, height = 8, unit = &quot;in&quot;, res = 300)
+plot(x, y)
+dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRheSAxIHR1dG9yaWFsOiBBZHZhbmNlZCBSIg0Kb3V0cHV0OiANCiAgaHRtbF9ub3RlYm9vazoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZGVwdGg6IDMNCi0tLQ0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCmBgYA0KDQoqKlRoZSBhaW0gb2YgdGhlIGFkdmFuY2VkIFIgdHV0b3JpYWwgaXMgdG8gc2hvdyBvbmUgaG93IHRvIGRldmVsb3Agb25lJ3Mgb3duIHRvb2xzIHdoZW4gdGhlcmUgaXMgbm8gcGFja2FnZXMvZnVuY3Rpb25zIGRldmVsb3BlZCBmb2N1cyBvbiBhIHNwZWNpZmljIHF1ZXN0aW9uLiBUaGVyZWZvcmUsIG9uZSBtYXkgbmVlZCB0byB3cml0ZSBhIGZ1bmN0aW9uIHRvIGFzc29jaWF0ZSB3aXRoIHRoZSBkYXRhOyBnZW5lcmF0ZSBmYW5jeSBwbG90cyBmb3IgcHVibGljYXRpb25zLCBhbmQgZ2VuZXJhdGUgYSBuaWNlbHkgcmVhZGFibGUgcmVwb3J0IGZvciBhIHZhcmlldHkgb2YgcHVycG9zZS4qKg0KDQojIyBGdW5jdGlvbnMgYW5kIGxvb3BzDQoNCiMjIyBGdW5jdGlvbnMNCg0KV2h5IHdyaXRlIGZ1bmN0aW9ucz8NCg0KKiBSZXBldGl0aXZlIHByb2Nlc3Nlcw0KKiBOb3RoaW5nIG1heSBleGlzdCBmb3Igb3VyIHB1cnBvc2UNCiogQ3VzdG9taXppbmcgZXhpc3RpbmcgZnVuY3Rpb24NCiAgKiBXZSBtYXkgbmVlZCB0byB0d2VhayB0aGUgb3V0cHV0IG9mIGEgZnVuY3Rpb24NCiAgKiBXZSBtYXkgb25seSBuZWVkIHBhcnQgb2YgYSBsYXJnZXIgZnVuY3Rpb24NCiAgKiBXZSBjYW4gY3VzdG9taXplIGZvciBpbmNyZWFzZWQgc3BlZWQNCiAgDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0KDQojIENvbW1vbiBmdW5jdGlvbnMgc3RydWN0dXJlOg0KbXlmdW5jdGlvbiA8LSBmdW5jdGlvbihhcmcxLCBhcmcyLCAuLi4gKXsNCnN0YXRlbWVudHMNCnJldHVybihvYmplY3QpDQp9DQoNCiMgRXhhbXBsZToNCm15ZnVuY3QgPC0gZnVuY3Rpb24oeCl7DQogIHk9eF4zK3heMit4KzENCn0NCnggPC0gc2VxKC0xMCwxMCwwLjUpDQp5IDwtIG15ZnVuY3QoeCkNCg0KIyBwbG90KHgseSwgdHlwZSA9ICJsIikNCmBgYA0KIyMjIExvb3BzDQoNClRoaXMgc2VjdGlvbiB3aWxsIGRpc2N1c3MgdGhyZWUgbG9vcHM6IGBmb3JgLCBgd2hpbGVgLCBhbmQgYHJlcGVhdGAgd2l0aCB0aGUgYWRkaXRpb25hbCBjbGF1c2VzIGBicmVha2AgYW5kIGBuZXh0YC4NCg0KVGhlIGBmb3JgIGxvb3AgY29uc3RydWN0cyBpbXBsaWVzIHRoYXQgdGhlIG51bWJlciBvZiBpdGVyYXRpb25zIGlzIGZpeGVkIGFuZCBrbm93biBpbiBhZHZhbmNlOw0KDQpUaGUgYHdoaWxlYCBsb29wLCBzZXQgaW4gdGhlIG1pZGRsZSBvZiB0aGUgZmlndXJlIGFib3ZlLCBpcyBtYWRlIG9mIGFuIGluaXRpYWxpemF0aW9uIGJsb2NrIGFzIGJlZm9yZSwgZm9sbG93ZWQgYnkgYSBsb2dpY2FsIGNvbmRpdGlvbjsNCg0KVGhlIGByZXBlYXRgIGxvb3AgaXMgc2ltaWxhciB0byB0aGUgd2hpbGUgbG9vcCwgYnV0IGl0IGlzIG1hZGUgc28gdGhhdCB0aGUgYmxvY2tzIG9mIGluc3RydWN0aW9ucyBpMSBhbmQgaTIgYXJlIGV4ZWN1dGVkIGF0IGxlYXN0IG9uY2UsIG5vIG1hdHRlciB3aGF0IHRoZSByZXN1bHQgb2YgdGhlIGNvbmRpdGlvbjsNCg0KYGJyZWFrYCBleGVjdXRlcyBhbmQgdGhlIGlubmVybW9zdCBsb29wIGlzIGludGVycnVwdGVkIHdpdGggYSBkaXJlY3QganVtcCB0byB0aGUgaW5zdHJ1Y3Rpb24gZm9sbG93aW5nIHRoZSBpbm5lciBsb29wOw0KDQpgbmV4dGAgZGlzY29udGludWVzIGEgcGFydGljdWxhciBpdGVyYXRpb24gYW5kIGp1bXBzIHRvIHRoZSBuZXh0IGN5Y2xlDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0KIyBTdHJ1Y3R1cmUgb2YgZm9yIGxvb3A6DQpmb3IgKHZhbCBpbiBzZXF1ZW5jZSkgew0KICBzdGF0ZW1lbnQNCn0NCg0KIyBFeGFtcGxlIDEgb2YgZm9yIGxvb3A6DQpmb3IgKGkgaW4gMTo1KSB7DQogIHByaW50KGkpDQp9DQojIEV4YW1wbGUgMiBvZiBmb3IgbG9vcDoNCm09MjANCmZvciAoayBpbiAxOm0pew0KICBpZiAoIWsgJSUgMikNCiAgICBuZXh0DQogICAgcHJpbnQoaykNCn0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIFN0cnVjdHVyZSBvZiB3aGlsZSBsb29wOg0Kd2hpbGUgKHRlc3RfZXhwcmVzc2lvbikgew0KICAgc3RhdGVtZW50DQp9DQoNCiMgRXhhbXBsZSBvZiB3aGlsZSBsb29wOg0KdiA8LSBjKCJIZXksIHdoaWxlIGxvb3AiKQ0KY250IDwtIDINCndoaWxlIChjbnQgPCA3KSB7DQogICBjYXQoY250LCAiICIsdiwgIlxuIikNCiAgIGNudCA9IGNudCArIDENCn0NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KICANCiMgU3RydWN0dXJlIG9mIHJlcGVhdCBsb29wOg0KcmVwZWF0IHsgDQogICBjb21tYW5kcyANCiAgIGlmKGNvbmRpdGlvbikgew0KICAgICAgYnJlYWsNCiAgIH0NCn0NCg0KIyBFeGFtcGxlIG9mIHJlcGVhdCBsb29wDQp2IDwtIGMoIkhleSwgcmVwZWF0IGxvb3AiKQ0KY250IDwtIDINCnJlcGVhdCB7DQogICBjYXQoY250LCAiICIsdiwgIlxuIikNCiAgIGNudCA8LSBjbnQrMQ0KICAgaWYoY250ID4gNSkgew0KICAgICAgYnJlYWsNCiAgIH0NCn0NCmBgYA0KDQojIyBbYEFwcGx5YF0oaHR0cHM6Ly93d3cuZGF0YWNhbXAuY29tL2NvbW11bml0eS90dXRvcmlhbHMvci10dXRvcmlhbC1hcHBseS1mYW1pbHkpIGZhbWlseQ0KDQpUbyBtYWtlIGEgYGZvcmAgbG9vcCBtb3JlIGVmZmljaWVudCwgYGFwcGx5KClgIGZ1bmN0aW9uIGlzIGludHJvZHVjZWQgaW4gUi4gVGhlIGBhcHBseSgpYCBmYW1pbHkgcGVydGFpbnMgdG8gdGhlIFIgYmFzZSBwYWNrYWdlIGFuZCBpcyBwb3B1bGF0ZWQgd2l0aCBmdW5jdGlvbnMgdG8gbWFuaXB1bGF0ZSBzbGljZXMgb2YgZGF0YSBmcm9tIG1hdHJpY2VzLCBhcnJheXMsIGxpc3RzLCBhbmQgZGF0YSBmcmFtZXMgaW4gYSByZXBldGl0aXZlIHdheS4gVGhlc2UgZnVuY3Rpb25zIGFsbG93IGNyb3NzaW5nIHRoZSBkYXRhIGluIGEgbnVtYmVyIG9mIHdheXMgYW5kIGF2b2lkIGV4cGxpY2l0IHVzZSBvZiBsb29wIGNvbnN0cnVjdHMuIFRoZXkgYWN0IG9uIGFuIGlucHV0IGxpc3QsIG1hdHJpeCwgb3IgYXJyYXkgYW5kIGFwcGx5IGEgbmFtZWQgZnVuY3Rpb24gd2l0aCBvbmUgb3Igc2V2ZXJhbCBvcHRpb25hbCBhcmd1bWVudHMuIFRoZSBhcHBseSBmdW5jdGlvbnMgKGBhcHBseWAsIGBzYXBwbHlgLCBgbGFwcGx5YCBldGMuKSBhcmUgbWFyZ2luYWxseSBmYXN0ZXIgdGhhbiBhIHJlZ3VsYXIgZm9yIGxvb3AuDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpOIDwtIDEwMDAwDQp4MSA8LSBydW5pZihOKQ0KeDIgPC0gcnVuaWYoTikNCmQgPC0gYXMuZGF0YS5mcmFtZShjYmluZCh4MSwgeDIpKQ0KDQpzeXN0ZW0udGltZShmb3IgKGkgaW4gYygxOmxlbmd0aChkWywgMV0pKSkgew0KICAgIGQkbWVhbjFbaV0gPC0gbWVhbihjKGRbaSwgMV0sIGRbaSwgMl0pKQ0KfSkNCg0Kc3lzdGVtLnRpbWUoZCRtZWFuMiA8LSBhcHBseShkLCAxLCBtZWFuKSkNCg0KIyBzeXN0ZW0udGltZShkJG1lYW4zIDwtIHJvdy5uYW1lcyhkKSkNCg0KbGlicmFyeShwYXJhbGxlbCkNCm51bUNvcmVzIDwtIGRldGVjdENvcmVzKCkNCmNsIDwtIG1ha2VDbHVzdGVyKG51bUNvcmVzKQ0Kc3lzdGVtLnRpbWUoZCRtZWFuMyA8LSBwYXJBcHBseShjbCxkLDEsIG1lYW4pKQ0Kc3RvcENsdXN0ZXIoY2wpDQpgYGANCg0KIyMgSW50cm8gdG8gW2dncGxvdDJdKGh0dHBzOi8vZ2dwbG90Mi1ib29rLm9yZy9pbmRleC5odG1sKQ0KDQpCYXNpYywgdXNlIHFwbG90KCkgZnVuY3Rpb24gKHF1aWNrIHBsb3QpLCBkZXNpZ25lZCBwcmltYXJpbHkgZm9yIGludGVyYWN0aXZlIHVzZTogaXQgbWFrZXMgc2V2ZXJhbCBhc3N1bXB0aW9ucyB0aGF0IHNwZWVkIG1vc3QgY2FzZXMuDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpsaWJyYXJ5KGdncGxvdDIpDQpkYXRhKCJkaWFtb25kcyIpDQpoZWFkKGRpYW1vbmRzKQ0KDQpxcGxvdChjYXJhdCwgcHJpY2UsIGRhdGEgPSBkaWFtb25kcykNCnFwbG90KGxvZyhjYXJhdCksbG9nKHByaWNlKSxkYXRhID0gZGlhbW9uZHMpDQpxcGxvdChjYXJhdCwgeCp5KnosIGRhdGEgPSBkaWFtb25kcykNCg0KZHNtYWxsIDwtIGRpYW1vbmRzW3NhbXBsZShucm93KGRpYW1vbmRzKSwxMDApLF0NCnFwbG90KGNhcmF0LCBwcmljZSwgZGF0YSA9IGRzbWFsbCwgY29sPWNvbG9yKQ0KDQojIHNoYXBlID0gY3V0Ow0KIyBhbHBoYSA9IDEgKHRyYW5zcGFyZW50KQ0KIyAuLi4NCmBgYA0KDQpQbG90IGdlb21zIChnZW9tZXRpY3MpIGdlb20gPSBwb2ludC8gc21vb3RoLyBib3hwbG90LyBwYXRoLyBoaXN0b2dyYW0g4oCmDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpxcGxvdChjb2xvciwgcHJpY2UsIGRhdGEgPSBkc21hbGwsIGdlb20gPSAnYm94cGxvdCcpICsgDQogIGdlb21fYm94cGxvdChvdXRsaWVyLmNvbG9yID0gImdyZWVuIiwNCiAgICAgICAgICAgICAgIG91dGxpZXIuc2l6ZSA9IDMsDQogICAgICAgICAgICAgICBmaWxsID0gInJlZCIsDQogICAgICAgICAgICAgICBjb2wgPSAiYmx1ZSIpDQpgYGANCg0KV2hlbiBkZXNpZ25pbmcgbXVsdGkgbGF5ZXJlZCBwbG90cyB3aXRoIGRpZmZlcmVudCBkYXRhIHNvdXJjZXMgaXQgY2FuIGdldCBpbiB0aGUgd2F5LiBUaGlzIHNlY3Rpb24gZGVzY3JpYmVzIHdoYXQgdGhvc2UgZGVmYXVsdHMgYXJlLCBhbmQgaG93IHRoZXkgbWFwIHRvIHRoZSBmdWxsZXIgZ2dwbG90KCkgc3ludGF4Lg0KDQpgYGB7ciwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0KcXBsb3QoY2FyYXQsIHByaWNlLCBkYXRhID0gZHNtYWxsLCBnZW9tID0gYygicG9pbnQiLCAic21vb3RoIikpDQpnZ3Bsb3QoZHNtYWxsLCBhZXMoY2FyYXQsIHByaWNlKSkgKyBnZW9tX3BvaW50KCkgKyBnZW9tX3Ntb290aCgpDQpgYGANCg0KV2hlbiB0aGUgY29uZGl0aW9ucyBnZXQgbW9yZSBjb21wbGVjYXRlZCwgbGlrZSB3ZSB3YW50IHRvIGNoZWNrIHRoZSBjYXJhdCBhbmQgcHJpY2UgcmVsYXRpb25zaGlwIHVuZGVyIGRpZmZlcmVudCBjdXQsIG9yIGN1dCBhbmQgY29sb3LigKYNCg0KYGBge3IsIGV2YWw9RiwgZWNobz1ULCB0aWR5ID0gVH0NCmdnIDwtIGdncGxvdChkaWFtb25kcywgYWVzKHg9Y2FyYXQsIHk9cHJpY2UsIGNvbG9yPWN1dCkpICsNCiAgZ2VvbV9wb2ludCgpICsgbGFicyh0aXRsZT0iU2NhdHRlcnBsb3QiLCB4PSJDYXJhdCIsIHk9IlByaWNlIikNCmdnICsgZmFjZXRfd3JhcCggfiBjdXQsIG5jb2w9MykNCmdnICsgZmFjZXRfZ3JpZChjb2xvciB+IGN1dCkgDQpgYGANCg0KRXhjZXB0IGZvciB0aGUgYWJvdmUgYnVpbHQtaW4gZnVuY3Rpb25zIGZyb20gZ2dwbG90LCBzb21lIG90aGVyIGludGVyYWN0aXZlIGFuZCBmdW5jdGlvbmFsIGRhdGEgdmlzdWFsaXphdGlvbiBwYWNrYWdlcyByZWx5aW5nIG9uIGBnZ3Bsb3RgIGFyZSBhbHNvIGRldmVsb3BlZCBmb3IgZGlmZmVyZW50IHR5cGVzIG9mIGZpZ3VyZSBnZW5lcmF0aW9uIGFzIGdncGxvdCdzIGV4dGVuc2lvbiwgYW5kIG9uZSBjYW4gZmluZCBpdCBbKipIRVJFKipdKGh0dHBzOi8vZXh0cy5nZ3Bsb3QyLnRpZHl2ZXJzZS5vcmcvZ2dpcmFwaC5odG1sKSwgYW5kIGZhbW91cyBvbmVzIGxpa2UgZ2dyYXBoLCBnZ3RyZWUgYXJlIGFsc28gcG9wdWxhciBpbiBiaW9sb2dpY2FsIHJlc2VhcmNoLg0KDQojIyBOaWNlbHkgb3V0cHV0OiBbUiBtYXJrZG93bl0oaHR0cHM6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20vKQ0KDQpUaGUgY29tYmluYXRpb24gb2YgUiBhbmQgbWFya2Rvd24sIGEgdGV4dCBlbnJpY2hlZCBjb252ZXJzaW9uIHRvb2wgYW5kIGl0IGFsbG93cyBvbmUgdG8gd3JpdGUgdXNpbmcgYW4gZWFzeS10by1yZWFkLCBlYXN5LXRvLXdyaXRlIHBsYWluIHRleHQgZm9ybWF0LCB0aGVuIGNvbnZlcnQgaXQgdG8gc3RydWN0dXJhbGx5IHZhbGlkIGZvcm1hdHMgKFBERiwgSFRNTCwgTVMgV29yZCksIGV2ZW4gcHJlc2VudGF0aW9uIHNsaWRlcy4gUiBtYXJrZG93biBldmVuIGFsbG93cyBvbmUgdG8gd3JpdGUgYWNhZGVtaWMgbWFudXNjcmlwdHMgd2l0aCBhIHdlbGwtb3JnYW5pemVkIGJpYmxpb2dyYXBoeS4gDQoNCioqVGhpcyBpcyBhIHF1aWNrIHJlZmVyZW5jZToqKg0KDQpgYGANCiMgaW5saW5lIGNvZGUNCicnciAyKjIgYCcNCg0KDQppbnN0YWxsLnBhY2thZ2VzKCJybWFya2Rvd24iKQ0KaW5zdGFsbC5wYWNrYWdlcygicnRpY2xlcyIpDQpUZXh0IGZvcm1hdHRpbmcgDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KKml0YWxpYyogIG9yIF9pdGFsaWNfDQoqKmJvbGQqKiAgIF9fYm9sZF9fDQpgY29kZWANCnN1cGVyc2NyaXB0XjJeIGFuZCBzdWJzY3JpcHR+Mn4NCg0KSGVhZGluZ3MNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIDFzdCBMZXZlbCBIZWFkZXINCg0KIyMgMm5kIExldmVsIEhlYWRlcg0KDQojIyMgM3JkIExldmVsIEhlYWRlcg0KDQpMaXN0cw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiogICBCdWxsZXRlZCBsaXN0IGl0ZW0gMQ0KDQoqICAgSXRlbSAyDQoNCiAgICAqIEl0ZW0gMmENCg0KICAgICogSXRlbSAyYg0KDQoxLiAgTnVtYmVyZWQgbGlzdCBpdGVtIDENCg0KMS4gIEl0ZW0gMi4gVGhlIG51bWJlcnMgYXJlIGluY3JlbWVudGVkIGF1dG9tYXRpY2FsbHkgaW4gdGhlIG91dHB1dC4NCg0KTGlua3MgYW5kIGltYWdlcw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCjxodHRwOi8vZXhhbXBsZS5jb20+DQoNCltsaW5rZWQgcGhyYXNlXShodHRwOi8vZXhhbXBsZS5jb20pDQoNCiFbb3B0aW9uYWwgY2FwdGlvbiB0ZXh0XShwYXRoL3RvL2ltZy5wbmcpDQoNClRhYmxlcyANCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpGaXJzdCBIZWFkZXIgIHwgU2Vjb25kIEhlYWRlcg0KLS0tLS0tLS0tLS0tLSB8IC0tLS0tLS0tLS0tLS0NCkNvbnRlbnQgQ2VsbCAgfCBDb250ZW50IENlbGwNCkNvbnRlbnQgQ2VsbCAgfCBDb250ZW50IENlbGwNCmBgYA0KDQoqKkNvZGUgY2h1bmsgb3B0aW9uczoqKg0KDQpDaHVuayBvdXRwdXQgY2FuIGJlIGN1c3RvbWl6ZWQgYXJndW1lbnRzIHNldCBpbiB0aGUge30gb2YgYSBjaHVuayBoZWFkZXIuIFRoZXNlIGFyZ3VtZW50cyBhcmUgbW9zdCBjb21tb25seSB1c2VkOg0KDQpBcmd1bWVudHwgRGVmYXVsdCB8IEVmZmVjdA0KLXwtfC0NCmBldmFsYCB8VFJVRSB8V2hldGhlciB0byBldmFsdWF0ZSB0aGUgY29kZSBhbmQgaW5jbHVkZSBpdHMgcmVzdWx0cw0KYGVjaG9gIHxUUlVFIHxXaGV0aGVyIHRvIGRpc3BsYXkgY29kZSBhbG9uZyB3aXRoIGl0cyByZXN1bHRzDQpgd2FybmluZ2AgfFRSVUUgfFdoZXRoZXIgdG8gZGlzcGxheSB3YXJuaW5ncw0KYGVycm9yYCB8RkFMU0UgfFdoZXRoZXIgdG8gZGlzcGxheSBlcnJvcnMNCmBtZXNzYWdlYCB8VFJVRSB8V2hldGhlciB0byBkaXNwbGF5IG1lc3NhZ2VzDQpgdGlkeWAgfEZBTFNFIHxXaGV0aGVyIHRvIHJlZm9ybWF0IGNvZGUgaW4gYSB0aWR5IHdheSB3aGVuIGRpc3BsYXlpbmcgaXQNCmByZXN1bHRzYCB8Im1hcmt1cCIgfCJtYXJrdXAiLCAiYXNpcyIsICJob2xkIiwgb3IgImhpZGUiDQpgY2FjaGVgIHxGQUxTRSB8V2hldGhlciB0byBjYWNoZSByZXN1bHRzIGZvciBmdXR1cmUgcmVuZGVycw0KYGNvbW1lbnRgIHwiIyMiIHxDb21tZW50IGNoYXJhY3RlciB0byBwcmVmYWNlIHJlc3VsdHMgd2l0aA0KYGZpZy53aWR0aGB8IDcgfFdpZHRoIGluIGluY2hlcyBmb3IgcGxvdHMgY3JlYXRlZCBpbiBjaHVuaw0KYGZpZy5oZWlnaHRgfCA3IHxIZWlnaHQgaW4gaW5jaGVzIGZvciBwbG90cyBjcmVhdGVkIGluIGNodW5r</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRheSAxIHR1dG9yaWFsOiBSIEJhc2ljcyINCm91dHB1dDogDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiAzDQotLS0NCg0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9DQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpgYGANCioqUiBiYXNpYyBpcyB0byBsZXQgYmVnaW5uZXJzIHdpdGggUiBoYXMgYSBiZXR0ZXIgaWRlYSBvZiBob3cgUiBpcyB3b3JraW5nLCBhbmQgYWxzbyBhYmxlIHRvIGZpbmlzaCBqb2JzIHdpdGggYnVpbHQtaW4gb3IgZGV2ZWxvcGVkIHBhY2thZ2VzL2Z1bmN0aW9ucy4gQWZ0ZXIgZmluaXNoIHRoaXMgc2VjdGlvbiwgb25lIG1heSBiZSBhYmxlIHRvIGhhdmUgYSBnZW5lcmFsIGtub3dsZWRnZSB0aGF0IGhvdyB0byBsb29rIHVwIHByb3BlciBwYWNrYWdlcy9mdW5jdGlvbnMsIGFuZCBob3cgdG8gdGFrZSBhZHZhbnRhZ2Ugb2YgdGhlbSBpbiB0aGUgc29sdXRpb24gb2YgY29tcHV0YXRpb25hbCBiaW9sb2dpY2FsIHF1ZXN0aW9ucy4qKg0KDQojIyBSdW5uaW5nL2NvbmR1Y3RpbmcgUg0KDQoqIFVzaW5nIHRoZSBSIGNvbnNvbGUsIGluIHlvdXIgdGVybWluYWwgb3IgQ29tbWFuZCBQcm9tcHQgdHlwZSBgcmAgb3IgYFJgLCBhbmQgb25lIGNhbiBjb2RlIGluIHRoZSBSIGVudmlyb25tZW50LiBJbiB0aGlzIHdheSwgeW91IGNhbiB1c2VkIGBSc2NyaXB0YCB0byBydW4geW91ciBzY3JpcHQuDQoNCmBgYA0KUiB2ZXJzaW9uIDQuMC4yICgyMDIwLTA2LTIyKSAtLSAiVGFraW5nIE9mZiBBZ2FpbiINCkNvcHlyaWdodCAoQykgMjAyMCBUaGUgUiBGb3VuZGF0aW9uIGZvciBTdGF0aXN0aWNhbCBDb21wdXRpbmcNClBsYXRmb3JtOiB4ODZfNjQtdzY0LW1pbmd3MzIveDY0ICg2NC1iaXQpDQouLi4NCg0KPg0KYGBgDQoNCiogR3JhcGhpYyBVc2VyIEludGVyZmFjZXMgKEdVSSksIHRoZXJlIGFyZSBtYW55IG9wdGlvbnMgaW5jbHVkaW5nIFJHVUksIFJTdHVkaW8sIEp1cHl0ZXIgZXRjLi4gUlN0dWRpbyBpcyBhIGNvbXByZWhlbnNpdmUgYW5kIGZ1bmN0aW9uYWwgY2hvaWNlLiBJbiB0aGUgUlN0dWRpbywgb25lIGNhbiBydW4gY29kZSBsaW5lIGJ5IGxpbmUgb3IgdGhlIHNlbGVjdGVkIGNvZGUgd2l0aCBgQ1RSTGArYEVOVEVSYCBrZXkuDQoNCiMjIFIgcGFja2FnZQ0KDQpQYWNrYWdlcyBhcmUgdGhlIGZ1bmRhbWVudGFsIHVuaXRzIG9mIHJlcHJvZHVjaWJsZSBSIGNvZGUuIFRoZXkgaW5jbHVkZSByZXVzYWJsZSBSIGZ1bmN0aW9ucywgdGhlIGRvY3VtZW50YXRpb24gdGhhdCBkZXNjcmliZXMgaG93IHRvIHVzZSB0aGVtLCBhbmQgc2FtcGxlIGRhdGEuIFIgcGFja2FnZXMgYXJlIHRoZSBmdW5jdGlvbiBleHRlbnNpb25zIG9mIFIuIFVzdWFsbHkgYSBwYWNrYWdlIHdvdWxkIHByb3ZpZGUgdGhlIHNwZWNpZmljIGludHJvZHVjdGlvbiB0byBoZWxwIGluc3RhbGwgaXQsIGFuZCBwcmluY2lwYWxseSB0aGVyZSBhcmUgMyB3YXlzIHRvIGluc3RhbGwgUiBwYWNrYWdlcy4NCg0KKiBJbnN0YWxsIHBhY2thZ2VzDQoNCiogRnJvbSBDUkFODQpgYGANCmluc3RhbGwucGFjYWtnZSgiUGFja2FnZSIpDQpgYGANCiogRnJvbSBiaW9jb25kdWN0b3INCmBgYA0KIyBUaGUgZmlyc3QgY29tbWFuZCBvbmx5IG5lZWRzIHRvIGJlIHJ1biBvbmNlDQoNCmluc3RhbGwucGFja2FnZXMoIkJpb2NNYW5hZ2VyIikgDQpCaW9jTWFuYWdlcjo6aW5zdGFsbCgiUGFja2FnZSIpDQpgYGANCiogRnJvbSBnaXRodWINCmBgYA0KIyBUaGUgZmlyc3QgY29tbWFuZCBvbmx5IG5lZWRzIHRvIGJlIHJ1biBvbmNlDQoNCmluc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikNCmRldnRvb2xzOjppbnN0YWxsX2dpdGh1YigiTmFpakl1Yy9UYXJnZXRCeUxhc3NvIikNCmBgYA0KKiBMb2FkaW5nIHBhY2thZ2VzDQoNCk5vIG1hdHRlciB3aGVyZSB0aGUgcGFja2FnZXMgaW5zdGFsbGVkIGZyb20sIG9uZSBjYW4gbG9hZCB0aGUgZGVzaXJlZCBwYWNrYWdlIHdpdGggdGhlIGBsaWJyYXJ5YCBjb21tYW5kIHRvIGxvYWQgdGhlIHNwZWNpZmljIHBhY2thZ2UuIA0KDQpgYGANCmxpYnJhcnkoIlBhY2thZ2UuMSIpDQpsaWJyYXJ5KCJQYWNrYWdlLjIiKQ0KLi4uDQpgYGANCiMjIEZ1bmN0aW9ucyBhbmQgb2JqZWN0cw0KDQpSIGlzIGFuIEludGVycHJldGVkIGxhbmd1YWdlIGFuZCB3aWxsIGdpdmUgb3V0Y29tZXMgc3RyYWlnaHQgZm9yd2FyZCBhZnRlciB5b3VyIGlucHV0IHdpdGggbW9zdCBmdW5jdGlvbnMuIFIgaGFzIGEgbG90IG9mIFtidWlsdC1pbiBmdW5jdGlvbnNdKGh0dHBzOi8vY3Jhbi5yLXByb2plY3Qub3JnL2RvYy9jb250cmliL1Nob3J0LXJlZmNhcmQucGRmKSBpbiBhc3Npc3Rpbmcgb25lJ3Mgd29yay4gQmVsb3cgaXMgdGhlIGdlbmVyYWwgZm9ybWF0IG9mIGZ1bmN0aW9uIHVzYWdlLg0KDQpgYGANCmZ1bmN0aW9uKHZhcmlhYmxlcywgc3RhdGVtZW50cywgLi4uKQ0KYGBgDQpFeGFtcGxlczoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQoNCnggPC0gMToyNQ0KDQpzdW0oeCkNCg0KbWVhbih4KQ0KDQptYXRyaXgoeCwgbmNvbCA9IDUsIGJ5cm93ID0gVCkNCg0KcGFzdGUoIk5vIiwgeCwgc2VwID0gIi4iKQ0KDQpwbG90KHgpDQoNCmBgYA0KU29tZXRpbWVzLCBvbmUgbWF5IGNvbmZ1c2UgYWJvdXQgYSBmdW5jdGlvbiwgYW5kIGA/ZnVuY3Rpb25gIHdpbGwgcHJvdmlkZSBkZXRhaWxzIGFib3V0IHRoZSBmdW5jdGlvbi4NCg0KRXhhbXBsZToNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQo/bG0NCj9nbG0NCmBgYA0KDQojIyMgQXNzaWdubWVudCBhbmQgY29tbWVudA0KDQoqIEFzc2lnbiBhIHZhbHVlIHRvIGEgbmFtZSB3aXRoIGFzc2lnbm1lbnQgb3BlcmF0b3JzLiANCiogTWFrZSBjb21tZW50cyB3aXRoIGAjYCBmb3Igc2luZ2xlLWxpbmUgY29tbWVudCwgYW5kIGBDVFJMYCtgU0hJRlRgK2BjYCBmb3IgcGFyYWdyYXBoIGNvbW1lbnQuDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQp4IDwtIDE6NQ0KDQo5OjUgLT4geQ0KDQpaID0geCArIHkNCg0KYSA8LSBiIDwtIGMgPC0gNg0KYGBgDQoNCiMjIyBEYXRhIHR5cGUgYW5kIGNsYXNzDQoNCk9iamVjdHMgYXJlIGNvbXBvc2VkIG9mIHZhcmlvdXMgZWxlbWVudHMsIGFuZCBlYWNoIGVsZW1lbnQgaGFzIGl0cyB0eXBlDQoNCiogKk51bWVyaWMqOiAwLCAtMSwgMy4xNA0KICAqICpJbnRlZ2VyKjogMkwgKHRoZSAiTCIgdGVsbHMgUiB0byBzdG9yZSB0aGlzIGFzIGFuIGludGVnZXIpDQoqICpDaGFyYWN0ZXIqOiAiUiIsICJwaXR0Ig0KKiAqTG9naWNhbCo6IFRSVUUgKFQpOyBGQUxTRSAoRikNCiogKmNvbXBsZXgqOiAxKzRpIChjb21wbGV4IG51bWJlcnMgd2l0aCByZWFsIGFuZCBpbWFnaW5hcnkgcGFydHMpDQoNCldoZW4gcHV0IHRoZSBzYW1lIG9yIGRpZmZlcmVudCBlbGVtZW50cyBpbnRvIGEgZ3JvdXAsIHRoZXkgdGhlbiBmb3JtIG9iamVjdHMgaW4gZGlmZmVyZW50IHN0cnVjdHVyZXMNCg0KKiAqVmVjdG9yKiwgdGhlIG1vc3QgY29tbW9uIGFuZCBiYXNpYyBkYXRhIHN0cnVjdHVyZSBpbiBSOw0KKiAqRmFjdG9ycyosIHZhcmlhYmxlcyB0YWtlIG9uIGEgbGltaXRlZCBudW1iZXIgb2YgZGlmZmVyZW50IHZhbHVlcywgb2Z0ZW4gcmVmZXJyZWQgdG8gYXMgY2F0ZWdvcmljYWwgdmFyaWFibGVzOw0KKiAqRGF0YSBmcmFtZSosIGEgdmVyeSBpbXBvcnRhbnQgZGF0YSB0eXBlIGluIFIgZm9yIG1vc3QgdGFidWxhciBkYXRhOw0KKiAqbWF0cml4KiwgbWF0cmljZXMgYXJlIGFuIGV4dGVuc2lvbiBvZiB0aGUgbnVtZXJpYyBvciBjaGFyYWN0ZXIgdmVjdG9yczsNCiAgKiAqQXJyYXkqLCBoaWdoZXIgZGltZW5zaW9uYWwgZGF0YSwgdGhlIGRpbWVuc2lvbiBvZiB2ZWN0b3IgaXMgMTsgb2YgbWF0cml4IGlzIDI7IGFuZCBvZiBhcnJheSBpcyBuKG4g4omlIDMpOw0KKiAqbGlzdCosIGEgY29udGFpbmVyLg0KDQpTb21lIG9mIHRoZXNlIHN0cnVjdHVyZXMgcmVxdWlyZSB0aGF0IGFsbCBtZW1iZXJzIGJlIG9mIHRoZSBzYW1lIGRhdGEgdHlwZSAoZS5nLiB2ZWN0b3JzLCBtYXRyaWNlcywgYXJyYXlzKSB3aGlsZSBvdGhlcnMgcGVybWl0IG11bHRpcGxlIGRhdGEgdHlwZXMgKGUuZy4gbGlzdHMsIGRhdGEgZnJhbWVzKS4gVG8gY2hlY2sgdGhlIHR5cGVzIG9yIHN0cnVjdHVyZXMgb2YgZGF0YSwg4oCcY2xhc3MoKeKAnSBjYW4gYmUgZW1wbG95ZWQuDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQojVmVjdG9yLCAoaWYgdGhlcmUgYXJlIGRpZmZlcmVudCB0eXBlcyBvZiBkYXRhIGluIGEgdmVjdG9yLCB0aGVuIGl0IGZvcmNlbHkgZm9ybXMgYSBjaGFyYWN0cHIgdmVjdG9yKToNCmEgPC0gYygxLDIsMyk7IGIgPC0gYygxTCwiYXBwbGUiLDIrNWksIGxvZ2ljYWwoMikpDQphOyBiDQoNCiNGYWN0b3IsIChmYWN0b3IgY2xhc3MgaGVscHMgc2ltcGx5IGNsYXNzaWZ5IHlvdXIgZGF0YSk6DQpjIDwtIGZhY3RvcihjKDE6NSwxLDMsNSkpOyANCmMNCmNbbGV2ZWxzKGMpID09ICIxIl0NCg0KIyBNYXRyaXggKHRoZXJlIGJ1aWx0LWluIGZ1bmN0aW9ucyBoZWxwIHRvIGNvbmR1Y3QgbWF0cml4IG9wZXJhdGlvbnMpOg0KbSA8LSBtYXRyaXgoMTo2LCBucm93ID0gMiwgbmNvbCA9IDMpOyBuIDwtIG1hdHJpeCgxOjYsIG5yb3cgPSAzLCBuY29sID0gMikNCmBgYA0KDQoNCmBgYHtyLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQojIFRoZSBjcmVhdGVkIG1hdHJpeGVzDQptOyBuOyANCiMgT3BlcmF0aW9uczoNCm0lKiVuOyBuJSolbQ0KDQojIEFycmF5Og0KdjEgPC0gMTozDQp2MiA8LSA4OjE0DQphcnJheShjKHYxLHYyKSxkaW0gPSBjKDIsMywzKSkgIyByb3csIGNvbHVtbiwgZGltZW5zaW9uDQoNCiMgRGF0YSBmcmFtZSAoQSBidWlsdC1pbiBkYXRhc2V0IGZyb20gUiBpcyBpbmNsdWRlZCwgdXNpbmcgZGF0YSgpIHRvIGNoZWNrIGFsbCBidWlsdC1pbiBkYXRhc2V0KToNCmRmLmNvMiA8LSBoZWFkKENPMikNCmRpbShDTzIpDQoNCiMgTGlzdDoNCmxpc3QgPC0gbGlzdChhLGIsYyxDTzIsbSxuKQ0KbGlzdFtbMV1dDQpgYGANCkFib3ZlIHR5cGVzL2NsYXNzZXMgY2FuIGJlIGRldGVybWluZWQgd2l0aCBmb2xsb3dpbmcgZnVuY3Rpb25zOg0KYGBge3IsIGV2YWw9RiwgZWNobz1ULCB0aWR5ID0gVH0NCm1vZGUoKSAjVGhlIChTdG9yYWdlKSBNb2RlIG9mIGFuIE9iamVjdA0KY2Fsc3MoKSAjIHRoZSB0eXBlL2NsYXNzIG9mIGFuIG9iamVjdA0KaXMubnVtZXJpYyh4KSAjICJ0ZXN0IGlmIFggaXMgYSBudW1lcmljIg0KaXMubmEoKQ0KYGBgDQojIyMgQ2FsY3VsYXRpbmcgc2lnbnMNCg0KKiBBcml0aG1ldGljIG9wZXJhdG9yOiANCmBgYHtyIHRhYmxlMSwgZWNobz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZ3M9RkFMU0UsIHJlc3VsdHM9J2FzaXMnLCB0aWR5ID0gVH0NCmtuaXRyOjprYWJsZShkYXRhLmZyYW1lKCdPcGVyYXRvcicgPSBjKCIrIiwiLSIsIioiLCIvIiwiXiBvciAqKiIsICIlJSIsICIlLyUiKSwNCidEZXNjcmlwdGlvbicgPSBjKCJhZGRpdGlvbiIsInN1YnRyYWN0aW9uIiwibXVsdGlwbGljYXRpb24iLCJkaXZpc2lvbiIsImV4cG9uZW50aWF0aW9uIiwibW9kdWx1cyAoeCBtb2QgeSkgNSUlMiBpcyAxIiwiaW50ZWdlciBkaXZpc2lvbiA1JS8lMiBpcyAyIikpKQ0KYGBgDQoqIExvZ2ljYWwgb3BlcmF0b3I6ICANCmBgYHtyIHRhYmxlMiwgZWNobz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZ3M9RkFMU0UsIHJlc3VsdHM9J2FzaXMnLCB0aWR5ID0gVH0NCmtuaXRyOjprYWJsZShkYXRhLmZyYW1lKCdPcGVyYXRvcicgPSBjKCI8IiwiPD0iLCAiPiIsIj49IiwiPT0iLCIhPSIsIiF4IiwifCIsIiYiLCJpc1RSVUUoeCkiKSwNCidEZXNjcmlwdGlvbicgPSBjKCJsZXNzIHRoYW4iLAkibGVzcyB0aGFuIG9yIGVxdWFsIHRvIiwJImdyZWF0ZXIgdGhhbiIsCSJncmVhdGVyIHRoYW4gb3IgZXF1YWwgdG8iLAkiZXhhY3RseSBlcXVhbCB0byIsCSJub3QgZXF1YWwgdG8iLAkiTm90IHgiLAkieCBPUiB5IiwJInggQU5EIHkiLAkidGVzdCBpZiBYIGlzIFRSVUUiKSksDQpjYXB0aW9uID0gJ1NvbWUgb2YgdGhlIG91dGNvbWVzIGFyZSBsb2dpY2FsIChUUlVFIG9yIEZBTFNFKScpDQpgYGANCg0KIyMgRGF0YSByZWFkLWluIGFuZCBvdXRwdXQNCg0KUiBjYW4gcmVhZCBmaWxlcyBmcm9tIGxvY2FsIGZpbGVzLCBvbmxpbmUgZmlsZXMsIGFuZCBtZW1vcnksIHdpdGggdmFyaWFudCB0eXBlcy4gV2l0aCB0aGUgaGVscCBvZiBzb21lIHBhY2thZ2VzLCBSIGNhbiBhY2Nlc3MgdGhlIEV4Y2VsIGZpbGUgYXMgd2VsbC4gRS5nLg0KDQpgYGB7ciwgLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQp0MSA8LSByZWFkLnRhYmxlKCJkYXRhL2NvdmlkLTE5LnRzdiIpDQp0MiA8LSByZWFkTGluZXMoJ2h0dHBzOi8vZnRwLm5jYmkubmxtLm5paC5nb3YvZ2VvL3Nlcmllcy9HU0Uybm5uL0dTRTI1ODMvc3VwcGwvR1NFMjU4M19jb3JyZWN0bHlfb3JkZXJlZF9LbGV2ZWN6X0dFT190aW1lX3Nlcmllc19kYXRhLnR4dCcpDQp0MyA8LSAgcmVhZENsaXBib2FyZCgpDQoNCmxpYnJhcnkoInJlYWR4bCIpDQp0NCA8LSByZWFkX2V4Y2VsKCJkYXRhL0dPXzNjZWxsLnhscyIpDQoNCmxpYnJhcnkoZGF0YS50YWJsZSkNCnQ1IDwtIGZyZWFkKCJkYXRhL0xVQURfcGhlbm90eXBlIikgDQpgYGANCg0KRW50ZXIgZGF0YSB1c2luZyBhIHNwcmVhZHNoZWV0DQoNCmBgYHtyLCAsIGV2YWw9RiwgZWNobz1ULCB0aWR5ID0gVH0NCmVkaXQodDIpDQpmaXgodDIpDQpgYGANCg0KT3BlcmF0aW9ucyBvbiBkYXRhIGZyYW1lLCBsaWtlIG1lcmdlLCBzdWJzZXQsIGlzb2xhdGUg4oCmKGRlbW8pDQoNCldyaXRlIGZpbGVzOg0KYGBge3IsICwgZXZhbD1GLCBlY2hvPVQsIHRpZHkgPSBUfQ0Kc2luaygiZmlsZS50eHQiKQ0Kd3JpdGVMaW5lcygpDQp3cml0ZS5jc3YoKQ0Kd3JpdGUudGFibGUoKQ0KYGBgDQoNClNhdmUgd3JpdGVzIGFuIGV4dGVybmFsIHJlcHJlc2VudGF0aW9uIG9mIFIgb2JqZWN0cyB0byB0aGUgc3BlY2lmaWVkIGZpbGUuIFRoZSBvYmplY3RzIGNhbiBiZSByZWFkIGJhY2sgZnJvbSB0aGUgZmlsZSBhdCBhIGxhdGVyIGRhdGUuDQoNCmBgYHtyLCAsIGV2YWw9RiwgZWNobz1ULCB0aWR5ID0gVH0NCnNhdmUuaW1hZ2UoZmlsZSA9ICIuUkRhdGEiLCB2ZXJzaW9uID0gTlVMTCwuLi4pDQpgYGANClRoZSBzYXZlZCBmaWxlcyBjYW4gYmUgcmVhZCBieSB1c2luZyBmdW5jdGlvbiBbbG9hZF0oaHR0cHM6Ly9zdGF0LmV0aHouY2gvUi1tYW51YWwvUi1kZXZlbC9saWJyYXJ5L2Jhc2UvaHRtbC9sb2FkLmh0bWwpIG9yIFthdHRhY2hdKGh0dHBzOi8vc3RhdC5ldGh6LmNoL1ItbWFudWFsL1ItZGV2ZWwvbGlicmFyeS9iYXNlL2h0bWwvYXR0YWNoLmh0bWwpIChvciBbZGF0YV0oaHR0cHM6Ly9zdGF0LmV0aHouY2gvUi1tYW51YWwvUi1kZXZlbC9saWJyYXJ5L3V0aWxzL2h0bWwvZGF0YS5odG1sKSBpbiBzb21lIGNhc2VzKS4NCg0KIyMgU2ltcGxlIEdyYXBocyB3aXRoIFINCg0KUiBpcyBmYW1vdXMgZm9yIGl0cyBncmFwaGluZyBpbWFnaW5nIGFiaWxpdHkgKFBsZWFzZSB0cnkgYGRlbW8oZ3JhcGhpY3MpYCB0byBjaGVjayBpdHMgZ2FsbGVyeSkuIEJlc2lkZXMgdGhlIHBvcHVsYXIgcGFja2FnZSwgYGdncGxvdGAsIFIgaGFzIHBsZW50eSBvZiBncmFwaCBmdW5jdGlvbnMgYW5kIGNvcnJlc3BvbmRpbmcgYXNzb2NpYXRpbmcgZnVuY3Rpb25zIHRvIGdlbmVyYXRlIGJlYXV0aWZ1bCBpbWFnZXMuDQoNCmBgYHtyLCAsIGV2YWw9RiwgZWNobz1ULCB0aWR5ID0gVH0NCmRhdGEoImNhcnMiKQ0KDQpwbG90KHggPSBjYXJzJHNwZWVkLCB5ID0gY2FycyRkaXN0KQ0KDQoNCiMgc3VicGFuZWwgb3B0aW9uIDENCnBhcihtZnJvdz1jKDMsMikpICMgcm93IGNvbA0KDQojIHN1YnBhbmVsIG9wdGlvbiAyDQpsYXlvdXQgKCBtYXRyaXggKCBjICgxICwgMSAsIDEgLA0KICAgICAgICAgICAgICAgICAgICAgMiAsIDMgLCA0ICwNCiAgICAgICAgICAgICAgICAgICAgIDIgLCAzICwgNSkgLCANCiAgICAgICAgICAgICAgICAgIG5yID0gMyAsIA0KICAgICAgICAgICAgICAgICAgYnlyb3cgPSBUKSApDQoNCg0KcGxvdChjYXJzJHNwZWVkKQ0KYmFycGxvdChjYXJzJHNwZWVkKQ0KaGlzdChjYXJzJGRpc3QpDQpwaWUoY2FycyRzcGVlZCkNCmJveHBsb3QoY2FycyRkaXN0KQ0KZG90Y2hhcnQoY2FycyRzcGVlZCkNCmBgYA0KDQpTYXZlIGltYWdlcywgRXhwb3J0IGlzIGFibGUgdG8gaGVscCBzYXZlIHRoZSBwbG90IGZvciBzdXJlLCBidXQgaWYgeW91IHdhbnQgaGlnaC1xdWFsaXR5IGZpZ3VyZXMsIGJ5IHVzaW5nOg0KDQpgYGB7ciwgLCBldmFsPUYsIGVjaG89VCwgdGlkeSA9IFR9DQpqcGVnL3BuZy9wZGYvdGlmZigncnBsb3QuanBnL3BuZy9wZGYvdGlmJywgd2lkdGggPSA4LCBoZWlnaHQgPSA4LCB1bml0PSJpbiIsIHJlcz0zMDApDQpwbG90KHgseSkNCmRldi5vZmYoKQ0KYGBg</div>
 
 
 
@@ -2131,7 +2109,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Day.2.rmd");
+  window.initializeSourceEmbed("Sept22.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

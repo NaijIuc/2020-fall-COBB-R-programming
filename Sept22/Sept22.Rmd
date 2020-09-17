@@ -164,7 +164,7 @@ Above types/classes can be determined with following functions:
 ```{r, eval=F, echo=T, tidy = T}
 mode() #The (Storage) Mode of an Object
 calss() # the type/class of an object
-is.numeric(x) "test if X is a numeric"
+is.numeric(x) # "test if X is a numeric"
 is.na()
 ```
 ### Calculating signs
