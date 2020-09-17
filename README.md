@@ -9,7 +9,7 @@ Besides, most of well developed R packages provide very detailed documentation o
 ## Requirements
 
 * Install [R](https://www.r-project.org/) and [Rstudio](https://rstudio.com/products/rstudio/) in your computer. These two software is available for all OS, and if you have difficulties installing them, please let me know.
-* One can download this Repository by pulling down the green **Code** button and choosing **Download ZIP**. Then one will have all the material we are going to use in the class.
+* One can download this Repository by pulling down the green **Code** button and choosing **Download ZIP**. Then one will have all the materials we are going to use in the class.
 * Please enjoy the Homework :)
 
 ## Tasks
