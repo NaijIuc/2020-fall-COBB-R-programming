@@ -7,7 +7,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval=F, echo=T, tidy = T)
 ```
 
 **The aim of the advanced R tutorial is to show one how to develop one's own tools when there is no packages/functions developed focus on a specific question. Therefore, one may need to write a function to associate with the data; generate fancy plots for publications, and generate a nicely readable report for a variety of purpose.**
@@ -25,7 +25,7 @@ Why write functions?
   * We may only need part of a larger function
   * We can customize for increased speed
   
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 
 # Common functions structure:
 myfunction <- function(arg1, arg2, ... ){
@@ -55,7 +55,7 @@ The `repeat` loop is similar to the while loop, but it is made so that the block
 `break` executes and the innermost loop is interrupted with a direct jump to the instruction following the inner loop;
 
 `next` discontinues a particular iteration and jumps to the next cycle
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 # Structure of for loop:
 for (val in sequence) {
   statement
@@ -112,7 +112,7 @@ repeat {
 
 To make a `for` loop more efficient, `apply()` function is introduced in R. The `apply()` family pertains to the R base package and is populated with functions to manipulate slices of data from matrices, arrays, lists, and data frames in a repetitive way. These functions allow crossing the data in a number of ways and avoid explicit use of loop constructs. They act on an input list, matrix, or array and apply a named function with one or several optional arguments. The apply functions (`apply`, `sapply`, `lapply` etc.) are marginally faster than a regular for loop.
 
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 N <- 10000
 x1 <- runif(N)
 x2 <- runif(N)
@@ -137,7 +137,7 @@ stopCluster(cl)
 
 Basic, use qplot() function (quick plot), designed primarily for interactive use: it makes several assumptions that speed most cases.
 
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 library(ggplot2)
 data("diamonds")
 head(diamonds)
@@ -156,7 +156,7 @@ qplot(carat, price, data = dsmall, col=color)
 
 Plot geoms (geometics) geom = point/ smooth/ boxplot/ path/ histogram …
 
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 qplot(color, price, data = dsmall, geom = 'boxplot') + 
   geom_boxplot(outlier.color = "green",
                outlier.size = 3,
@@ -166,14 +166,14 @@ qplot(color, price, data = dsmall, geom = 'boxplot') +
 
 When designing multi layered plots with different data sources it can get in the way. This section describes what those defaults are, and how they map to the fuller ggplot() syntax.
 
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 qplot(carat, price, data = dsmall, geom = c("point", "smooth"))
 ggplot(dsmall, aes(carat, price)) + geom_point() + geom_smooth()
 ```
 
 When the conditions get more complecated, like we want to check the carat and price relationship under different cut, or cut and color…
 
-```{r, eval=F, echo=T, tidy = T}
+```{r}
 gg <- ggplot(diamonds, aes(x=carat, y=price, color=cut)) +
   geom_point() + labs(title="Scatterplot", x="Carat", y="Price")
 gg + facet_wrap( ~ cut, ncol=3)
